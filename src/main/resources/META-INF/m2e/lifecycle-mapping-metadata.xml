@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright (c) 2019 Jose Montoya
+
+    This program and the accompanying materials are made
+    available under the terms of the Eclipse Public License 2.0
+    which is available at https://www.eclipse.org/legal/epl-2.0/
+
+    SPDX-License-Identifier: EPL-2.0
+-->
+<lifecycleMappingMetadata>
+  <pluginExecutions>
+    <pluginExecution>
+      <pluginExecutionFilter>
+        <goals>
+          <goal>format</goal>
+          <goal>validate</goal>
+        </goals>
+      </pluginExecutionFilter>
+      <action>
+        <ignore/>
+        <!-- TODO get formatter-m2e-configurator working here -->
+        <!--
+        <configurator>
+          <id>net.revelc.code.formatter.connector</id>
+        </configurator>
+        -->
+      </action>
+    </pluginExecution>
+  </pluginExecutions>
+</lifecycleMappingMetadata>

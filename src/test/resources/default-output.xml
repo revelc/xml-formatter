@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns:api-platform-gw="http://www.mulesoft.org/schema/mule/api-platform-gw"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/apikit"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:spring="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/apikit http://www.mulesoft.org/schema/mule/apikit/current/mule-apikit.xsd
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+http://www.mulesoft.org/schema/mule/api-platform-gw http://www.mulesoft.org/schema/mule/api-platform-gw/current/mule-api-platform-gw.xsd">
+	<apikit:config name="api-v2-config" raml="v2/api.raml" consoleEnabled="false" doc:name="Router"
+		keepRamlBaseUri="false">
+		<apikit:flow-mapping resource="uri-1" action="post" content-type="application/json"
+			flow-ref="post:uri-1:application/json:api-config" />
+		<apikit:flow-mapping resource="uri-2" action="post" content-type="application/json"
+			flow-ref="post:uri-2:application/json:api-config" />
+		<apikit:flow-mapping resource="uri-3" action="post" content-type="application/json"
+			flow-ref="post:uri-3:application/json:api-config" />
+		<apikit:flow-mapping resource="uri-4" action="post" content-type="application/json"
+			flow-ref="post:uri-4:application/json:api-config" />
+		<apikit:flow-mapping resource="uri-5" action="post" content-type="application/json"
+			flow-ref="post:uri-5:application/json:api-config" />
+	</apikit:config>
+
+	<!--Here's a comment surrounded wrapped by empty lines to make sure they are kept-->
+
+	<api-platform-gw:api apiName="${api-v2.name}" version="${api-v2.version}" flowRef="api-v2-main" create="true"
+		apikitRef="api-v2-config" doc:name="API Autodiscovery" />
+	<flow name="api-v2-main">
+		<http:listener config-ref="api-httpsListenerConfig" path="/api/v2/*" doc:name="HTTP" />
+		<set-variable variableName="traceId"
+			value="#[message.inboundProperties.'correlationId' != null ? message.inboundProperties.'uber-trace-id' : java.util.UUID.randomUUID().toString()]"
+			doc:name="Variable - traceId" mimeType="application/java" />
+		<apikit:router config-ref="api-v2-config" doc:name="APIkit Router" />
+		<exception-strategy ref="global-exception-strategy" doc:name="Reference Exception Strategy" />
+	</flow>
+	<flow name="api-v2-console">
+		<http:listener config-ref="api-httpsListenerConfig" path="/console/v2/*" doc:name="HTTP" />
+		<apikit:console config-ref="api-v2-config" doc:name="APIkit Console" />
+	</flow>
+	<flow name="post:uri-1:application/json:api-config">
+		<flow-ref name="some-flow" doc:name="some-flow" />
+	</flow>
+	<flow name="post:uri-5:application/json:api-config">
+		<flow-ref name="some-flow-2" doc:name="some-flow-2" />
+	</flow>
+	<flow name="post:uri-2:application/json:api-config">
+		<flow-ref name="some-flow-3" doc:name="some-flow-3" />
+	</flow>
+	<flow name="post:uri-4:application/json:api-config">
+		<flow-ref name="some-flow-4" doc:name="some-flow-4" />
+	</flow>
+	<flow name="post:uri-3:application/json:api-config">
+		<flow-ref name="some-flow-5" doc:name="some-flow-5" />
+	</flow>
+</mule>
