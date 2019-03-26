@@ -13,7 +13,7 @@
 
   <groupId>net.revelc.code.formatter</groupId>
   <artifactId>xml-formatter</artifactId>
-  <version>0.1.0-SNAPSHOT</version>
+  <version>0.1.0</version>
 
   <packaging>jar</packaging>
   <name>xml-formatter</name>
@@ -44,7 +44,7 @@
   <scm>
     <connection>scm:git:https://github.com/revelc/xml-formatter.git</connection>
     <developerConnection>scm:git:git@github.com/revelc/xml-formatter.git</developerConnection>
-    <tag>HEAD</tag>
+    <tag>xml-formatter-0.1.0</tag>
     <url>https://github.com/revelc/xml-formatter</url>
   </scm>
 
