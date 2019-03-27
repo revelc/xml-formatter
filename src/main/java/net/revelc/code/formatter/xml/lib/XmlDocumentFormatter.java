@@ -13,7 +13,7 @@
  * 	   IBM Corporation - bug fixes
  * 	   Jose Montoya - Modified implementation outside Eclipse Platform
  *******************************************************************************/
-package net.revelc.code.formatter.xml;
+package net.revelc.code.formatter.xml.lib;
 
 import java.io.IOException;
 import java.io.Reader;
