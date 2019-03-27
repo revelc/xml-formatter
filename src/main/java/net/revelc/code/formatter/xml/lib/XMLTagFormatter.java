@@ -355,7 +355,6 @@ public class XMLTagFormatter {
         }
 
         /**
-         * @param tagText
          * @return a fully populated tag
          */
         public Tag parse(String tagText) throws ParseException {
