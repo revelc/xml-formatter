@@ -12,9 +12,10 @@ package net.revelc.code.formatter.xml.lib;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.io.File;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
-import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Test;
 
 public class FormatterTest {
@@ -23,10 +24,12 @@ public class FormatterTest {
     public void testDefaultPreferences() throws Exception {
         XmlDocumentFormatter formatter = new XmlDocumentFormatter(System.lineSeparator(), new FormattingPreferences());
 
-        String inXml = FileUtils.readFileToString(new File("src/test/resources/test-input.xml"), "UTF-8");
+        String inXml = new String(Files.readAllBytes(Paths.get("src/test/resources/test-input.xml")),
+                StandardCharsets.UTF_8);
         String outXml = formatter.format(inXml);
 
-        assertEquals(outXml, FileUtils.readFileToString(new File("src/test/resources/default-output.xml"), "UTF-8"));
+        assertEquals(outXml, new String(Files.readAllBytes(Paths.get("src/test/resources/default-output.xml")),
+                StandardCharsets.UTF_8));
     }
 
     @Test
@@ -35,11 +38,13 @@ public class FormatterTest {
         prefs.setSplitMultiAttrs(true);
         XmlDocumentFormatter formatter = new XmlDocumentFormatter(System.lineSeparator(), prefs);
 
-        String inXml = FileUtils.readFileToString(new File("src/test/resources/test-input.xml"), "UTF-8");
+        String inXml = new String(Files.readAllBytes(Paths.get("src/test/resources/test-input.xml")),
+                StandardCharsets.UTF_8);
         String outXml = formatter.format(inXml);
 
         assertEquals(outXml,
-                FileUtils.readFileToString(new File("src/test/resources/multi-lined-attrs-output.xml"), "UTF-8"));
+                new String(Files.readAllBytes(Paths.get("src/test/resources/multi-lined-attrs-output.xml")),
+                        StandardCharsets.UTF_8));
     }
 
     @Test
@@ -48,17 +53,19 @@ public class FormatterTest {
         prefs.setWrapLongLines(false);
         XmlDocumentFormatter formatter = new XmlDocumentFormatter(System.lineSeparator(), prefs);
 
-        String inXml = FileUtils.readFileToString(new File("src/test/resources/test-input.xml"), "UTF-8");
+        String inXml = new String(Files.readAllBytes(Paths.get("src/test/resources/test-input.xml")),
+                StandardCharsets.UTF_8);
         String outXml = formatter.format(inXml);
 
-        assertEquals(outXml,
-                FileUtils.readFileToString(new File("src/test/resources/no-wrap-tags-output.xml"), "UTF-8"));
+        assertEquals(outXml, new String(Files.readAllBytes(Paths.get("src/test/resources/no-wrap-tags-output.xml")),
+                StandardCharsets.UTF_8));
     }
 
     @Test
     public void testMalformedCaught() throws Exception {
         XmlDocumentFormatter formatter = new XmlDocumentFormatter(System.lineSeparator(), new FormattingPreferences());
-        String inXml = FileUtils.readFileToString(new File("src/test/resources/malformed.xml"), "UTF-8");
+        String inXml = new String(Files.readAllBytes(Paths.get("src/test/resources/malformed.xml")),
+                StandardCharsets.UTF_8);
 
         assertThrows(IllegalArgumentException.class, () -> formatter.format(inXml));
     }
