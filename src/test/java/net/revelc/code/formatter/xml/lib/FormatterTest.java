@@ -79,4 +79,15 @@ public class FormatterTest {
 
         assertDoesNotThrow(() -> formatter.format(inXml));
     }
+
+    @Test
+    public void testNoRootElementFails() throws Exception {
+        FormattingPreferences prefs = new FormattingPreferences();
+        prefs.setSaxValidation(FormattingPreferences.FAIL);
+        XmlDocumentFormatter formatter = new XmlDocumentFormatter(System.lineSeparator(), prefs);
+        String inXml = new String(Files.readAllBytes(Paths.get("src/test/resources/sample-orca5-deps.xml")),
+                StandardCharsets.UTF_8);
+
+        assertThrows(IllegalArgumentException.class, () -> formatter.format(inXml));
+    }
 }
