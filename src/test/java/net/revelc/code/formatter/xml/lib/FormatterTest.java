@@ -11,6 +11,7 @@ package net.revelc.code.formatter.xml.lib;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -68,5 +69,14 @@ public class FormatterTest {
                 StandardCharsets.UTF_8);
 
         assertThrows(IllegalArgumentException.class, () -> formatter.format(inXml));
+    }
+
+    @Test
+    public void testNoRootElement() throws Exception {
+        XmlDocumentFormatter formatter = new XmlDocumentFormatter(System.lineSeparator(), new FormattingPreferences());
+        String inXml = new String(Files.readAllBytes(Paths.get("src/test/resources/sample-orca5-deps.xml")),
+                StandardCharsets.UTF_8);
+
+        assertDoesNotThrow(() -> formatter.format(inXml));
     }
 }
