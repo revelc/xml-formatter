@@ -1,0 +1,23 @@
+<!-- from https://github.com/RENCI-NRIG/orca5/blob/master/boot/ant/deps.xml -->
+<!--
+    User-specific project build properties. Properties defined in this file have
+    precedence over properties defined in build.properties
+-->
+<property file="${basedir}/ant/user.properties" />
+        <!--
+             Project buld properties.
+        -->
+<property file="${basedir}/ant/build.properties" />
+        <!--
+            User-specific project test properties. Properties defined in this file have
+            precedence over properties defined in tests.properties
+        -->
+<property file="${basedir}/ant/user.tests.properties" />
+        <!--
+             Project test properties.
+        -->
+<property file="${basedir}/ant/tests.properties" />
+        <!-- Antcontrib tasks -->
+<taskdef resource="net/sf/antcontrib/antlib.xml" classpath="${compile_classpath}" />
+        <!-- xjc task: used for generating beans from xsd files -->
+<taskdef name="xjc" classname="com.sun.tools.xjc.XJCTask" classpath="${compile_classpath}" />
