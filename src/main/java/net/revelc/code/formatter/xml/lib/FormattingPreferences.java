@@ -16,11 +16,16 @@
 package net.revelc.code.formatter.xml.lib;
 
 public class FormattingPreferences {
+    public static final String IGNORE = "IGNORE";
+    public static final String WARN = "WARN";
+    public static final String FAIL = "FAIL";
+
     private int maxLineLength = 120;
     private boolean wrapLongLines = true;
     private boolean tabInsteadOfSpaces = true;
     private int tabWidth = 4;
     private boolean splitMultiAttrs = false;
+    private String saxValidation = WARN;
 
     public void setMaxLineLength(Integer maxLineLength) {
         if (maxLineLength != null)
@@ -80,5 +85,15 @@ public class FormattingPreferences {
     public void setSplitMultiAttrs(Boolean setSplitMultiAttrs) {
         if (setSplitMultiAttrs != null)
             this.splitMultiAttrs = setSplitMultiAttrs;
+    }
+
+    public String getSaxValidation() { return saxValidation; }
+
+    public void setSaxValidation(String saxValidation) {
+        if (saxValidation.equals(IGNORE) || saxValidation.equals(FAIL)) {
+            this.saxValidation = saxValidation;
+        } else {
+            this.saxValidation = WARN;
+        }
     }
 }
