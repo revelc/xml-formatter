@@ -117,7 +117,7 @@ public class XmlDocumentFormatter {
             reader.parse(new InputSource(new StringReader(documentText)));
         } catch (Exception exception) {
             if (prefs.getSaxValidation().equals(FormattingPreferences.WARN)) {
-                System.out.println(exception.getMessage());
+                System.err.println("WARN: " + exception.getMessage());
             } else {
                 throw new IllegalArgumentException(exception);
             }
