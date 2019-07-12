@@ -90,10 +90,10 @@ public class FormattingPreferences {
     public String getSaxValidation() { return saxValidation; }
 
     public void setSaxValidation(String saxValidation) {
-        if (saxValidation.equals(IGNORE) || saxValidation.equals(FAIL)) {
+        if (saxValidation.equals(IGNORE) || saxValidation.equals(FAIL) || saxValidation.equals(WARN)) {
             this.saxValidation = saxValidation;
         } else {
-            this.saxValidation = WARN;
+            throw new IllegalArgumentException("Invalid configuration value for SAX Validation: " + saxValidation);
         }
     }
 }
