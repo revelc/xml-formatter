@@ -109,6 +109,8 @@ public class XmlDocumentFormatter {
             SAXParserFactory factory = SAXParserFactory.newInstance();
             factory.setValidating(false);
             factory.setNamespaceAware(true);
+            factory.setFeature("http://apache.org/xml/features/nonvalidating/load-dtd-grammar", false);
+            factory.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
 
             SAXParser parser = factory.newSAXParser();
 
@@ -116,7 +118,8 @@ public class XmlDocumentFormatter {
             reader.setErrorHandler(errorHandler);
             reader.parse(new InputSource(new StringReader(documentText)));
         } catch (Exception exception) {
-            if (prefs.getWellFormedValidation().equals(FormattingPreferences.WARN)) {
+            if (exception instanceof SAXParseException
+                    && prefs.getWellFormedValidation().equals(FormattingPreferences.WARN)) {
                 System.err.println("WARN: " + exception.getMessage());
             } else {
                 throw new IllegalArgumentException(exception);
