@@ -92,4 +92,14 @@ public class FormatterTest {
 
         assertThrows(IllegalArgumentException.class, () -> formatter.format(inXml));
     }
+
+    @Test
+    public void testNoDtdValidation() throws Exception {
+        XmlDocumentFormatter formatter = new XmlDocumentFormatter(System.lineSeparator(), new FormattingPreferences());
+        String inXml = new String(Files.readAllBytes(Paths.get("src/test/resources/dtd-test-input.xml")),
+                StandardCharsets.UTF_8);
+
+        assertDoesNotThrow(() -> formatter.format(inXml));
+    }
+
 }
