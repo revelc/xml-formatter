@@ -9,9 +9,9 @@
  *******************************************************************************/
 package net.revelc.code.formatter.xml.lib;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -64,7 +64,9 @@ public class FormatterTest {
 
     @Test
     public void testMalformedCaught() throws Exception {
-        XmlDocumentFormatter formatter = new XmlDocumentFormatter(System.lineSeparator(), new FormattingPreferences());
+        FormattingPreferences prefs = new FormattingPreferences();
+        prefs.setSaxValidation(FormattingPreferences.FAIL);
+        XmlDocumentFormatter formatter = new XmlDocumentFormatter(System.lineSeparator(), prefs);
         String inXml = new String(Files.readAllBytes(Paths.get("src/test/resources/malformed.xml")),
                 StandardCharsets.UTF_8);
 

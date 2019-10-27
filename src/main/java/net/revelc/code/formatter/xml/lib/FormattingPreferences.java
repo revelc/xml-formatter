@@ -87,7 +87,9 @@ public class FormattingPreferences {
             this.splitMultiAttrs = setSplitMultiAttrs;
     }
 
-    public String getSaxValidation() { return saxValidation; }
+    public String getSaxValidation() {
+        return saxValidation;
+    }
 
     public void setSaxValidation(String saxValidation) {
         if (saxValidation.equals(IGNORE) || saxValidation.equals(FAIL) || saxValidation.equals(WARN)) {
