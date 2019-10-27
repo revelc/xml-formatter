@@ -74,7 +74,7 @@ public class XmlDocumentFormatter {
     }
 
     public String format(String documentText) {
-        if (!prefs.getSaxValidation().equals(FormattingPreferences.IGNORE)) {
+        if (!prefs.getWellFormedValidation().equals(FormattingPreferences.IGNORE)) {
             validateWellFormedness(documentText);
         }
 
@@ -116,7 +116,7 @@ public class XmlDocumentFormatter {
             reader.setErrorHandler(errorHandler);
             reader.parse(new InputSource(new StringReader(documentText)));
         } catch (Exception exception) {
-            if (prefs.getSaxValidation().equals(FormattingPreferences.WARN)) {
+            if (prefs.getWellFormedValidation().equals(FormattingPreferences.WARN)) {
                 System.err.println("WARN: " + exception.getMessage());
             } else {
                 throw new IllegalArgumentException(exception);

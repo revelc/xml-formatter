@@ -25,7 +25,7 @@ public class FormattingPreferences {
     private boolean tabInsteadOfSpaces = true;
     private int tabWidth = 4;
     private boolean splitMultiAttrs = false;
-    private String saxValidation = WARN;
+    private String wellFormedValidation = WARN;
 
     public void setMaxLineLength(Integer maxLineLength) {
         if (maxLineLength != null)
@@ -87,15 +87,17 @@ public class FormattingPreferences {
             this.splitMultiAttrs = setSplitMultiAttrs;
     }
 
-    public String getSaxValidation() {
-        return saxValidation;
+    public String getWellFormedValidation() {
+        return wellFormedValidation;
     }
 
-    public void setSaxValidation(String saxValidation) {
-        if (saxValidation.equals(IGNORE) || saxValidation.equals(FAIL) || saxValidation.equals(WARN)) {
-            this.saxValidation = saxValidation;
+    public void setWellFormedValidation(String wellFormedValidation) {
+        if (wellFormedValidation.equals(IGNORE) || wellFormedValidation.equals(FAIL)
+                || wellFormedValidation.equals(WARN)) {
+            this.wellFormedValidation = wellFormedValidation;
         } else {
-            throw new IllegalArgumentException("Invalid configuration value for SAX Validation: " + saxValidation);
+            throw new IllegalArgumentException(
+                    "Invalid configuration value for well formed validation: " + wellFormedValidation);
         }
     }
 }
