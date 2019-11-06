@@ -10,18 +10,14 @@
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
   <groupId>net.revelc.code.formatter</groupId>
   <artifactId>xml-formatter</artifactId>
   <version>0.2.0-SNAPSHOT</version>
-
   <packaging>jar</packaging>
   <name>xml-formatter</name>
-
   <description>XML Formatter for use with formatter-maven-plugin</description>
   <url>https://github.com/revelc/xml-formatter/</url>
   <inceptionYear>2019</inceptionYear>
-
   <licenses>
     <license>
       <name>Eclipse Public License, Version 2.0</name>
@@ -30,7 +26,6 @@
       <comments>A commercially-friendly copyleft license</comments>
     </license>
   </licenses>
-
   <developers>
     <developer>
       <id>jam01</id>
@@ -40,14 +35,12 @@
       <organizationUrl>https://www.ms3-inc.com</organizationUrl>
     </developer>
   </developers>
-
   <scm>
     <connection>scm:git:https://github.com/revelc/xml-formatter.git</connection>
     <developerConnection>scm:git:git@github.com/revelc/xml-formatter.git</developerConnection>
     <tag>HEAD</tag>
     <url>https://github.com/revelc/xml-formatter</url>
   </scm>
-
   <issueManagement>
     <system>GitHub</system>
     <url>https://github.com/revelc/xml-formatter/issues</url>
@@ -56,7 +49,6 @@
     <system>travis</system>
     <url>https://travis-ci.org/revelc/xml-formatter/</url>
   </ciManagement>
-
   <distributionManagement>
     <repository>
       <id>sonatype-nexus-staging</id>
@@ -73,20 +65,15 @@
       <url>git:ssh://git@github.com/revelc/xml-formatter.git?gh-pages#</url>
     </site>
   </distributionManagement>
-
   <properties>
-    <junit.version>5.5.0-M1</junit.version>
-
+    <junit.version>5.6.0-M1</junit.version>
+    <maven.compiler.release>8</maven.compiler.release>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
-    <maven.compiler.testSource>1.8</maven.compiler.testSource>
-    <maven.compiler.testTarget>1.8</maven.compiler.testTarget>
-
     <project.build.resourceEncoding>UTF-8</project.build.resourceEncoding>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
   </properties>
-
   <dependencies>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
@@ -100,9 +87,7 @@
       <version>${junit.version}</version>
       <scope>test</scope>
     </dependency>
-
   </dependencies>
-
   <build>
     <pluginManagement>
       <plugins>
@@ -114,7 +99,7 @@
         <plugin>
           <groupId>net.revelc.code.formatter</groupId>
           <artifactId>formatter-maven-plugin</artifactId>
-          <version>2.8.1</version>
+          <version>2.10.0</version>
           <configuration>
             <sourceDirectory>${project.basedir}</sourceDirectory>
             <excludes>
@@ -132,7 +117,7 @@
         <plugin>
           <groupId>net.revelc.code</groupId>
           <artifactId>impsort-maven-plugin</artifactId>
-          <version>1.2.0</version>
+          <version>1.3.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -142,7 +127,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.8.0</version>
+          <version>3.8.1</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -172,7 +157,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-jar-plugin</artifactId>
-          <version>3.1.1</version>
+          <version>3.1.2</version>
           <configuration>
             <archive>
               <manifestEntries>
@@ -184,7 +169,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-javadoc-plugin</artifactId>
-          <version>3.1.0</version>
+          <version>3.1.1</version>
           <configuration>
             <quiet>true</quiet>
             <doclint>all,-missing</doclint>
@@ -215,31 +200,12 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-site-plugin</artifactId>
-          <version>3.7.1</version>
-          <dependencies>
-            <dependency>
-              <groupId>net.trajano.wagon</groupId>
-              <artifactId>wagon-git</artifactId>
-              <!-- Do not upgrade to 2.0.4 as it does not work -->
-              <version>2.0.3</version>
-            </dependency>
-            <!-- For reporting only of versions -->
-            <dependency>
-              <groupId>org.apache.maven.skins</groupId>
-              <artifactId>maven-fluido-skin</artifactId>
-              <version>1.7</version>
-            </dependency>
-            <dependency>
-              <groupId>org.apache.maven.wagon</groupId>
-              <artifactId>wagon-ssh</artifactId>
-              <version>3.3.2</version>
-            </dependency>
-          </dependencies>
+          <version>3.8.2</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-source-plugin</artifactId>
-          <version>3.0.1</version>
+          <version>3.2.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -262,7 +228,7 @@
         <plugin>
           <groupId>org.jacoco</groupId>
           <artifactId>jacoco-maven-plugin</artifactId>
-          <version>0.8.3</version>
+          <version>0.8.4</version>
         </plugin>
         <plugin>
           <groupId>org.gaul</groupId>
@@ -274,7 +240,6 @@
         </plugin>
       </plugins>
     </pluginManagement>
-
     <plugins>
       <plugin>
         <groupId>com.github.ekryd.sortpom</groupId>
@@ -283,7 +248,7 @@
           <createBackupFile>false</createBackupFile>
           <expandEmptyElements>false</expandEmptyElements>
           <lineSeparator>\n</lineSeparator>
-          <keepBlankLines>true</keepBlankLines>
+          <keepBlankLines>false</keepBlankLines>
           <nrOfIndentSpace>2</nrOfIndentSpace>
           <predefinedSortOrder>recommended_2008_06</predefinedSortOrder>
           <sortDependencies>scope,groupId,artifactId</sortDependencies>
@@ -348,9 +313,9 @@
               <failOnWarning>true</failOnWarning>
               <ignoredUnusedDeclaredDependencies>
                 <!-- ignore runtime junit test dependency -->
-                <unusedDeclaredDependency>org.junit.jupiter:junit-jupiter-engine:jar:${junit.version}</unusedDeclaredDependency>
+                <ignored>org.junit.jupiter:junit-jupiter-engine</ignored>
                 <!-- ignore transitive dependency overridden to avoid vulnerability -->
-                <ignoredDeclaredDependency>commons-beanutils:commons-beanutils</ignoredDeclaredDependency>
+                <ignored>commons-beanutils:commons-beanutils</ignored>
               </ignoredUnusedDeclaredDependencies>
             </configuration>
           </execution>
@@ -365,7 +330,7 @@
               <version>[3.3.9,)</version>
             </requireMavenVersion>
             <requireJavaVersion>
-              <version>[${maven.compiler.source},)</version>
+              <version>[11,)</version>
             </requireJavaVersion>
           </rules>
         </configuration>
@@ -425,7 +390,6 @@
       </plugin>
     </plugins>
   </build>
-
   <reporting>
     <plugins>
       <plugin>
@@ -434,7 +398,6 @@
       </plugin>
     </plugins>
   </reporting>
-
   <profiles>
     <profile>
       <id>sonatype-oss-release</id>
@@ -480,7 +443,6 @@
         </plugins>
       </build>
     </profile>
-
     <profile>
       <id>travis</id>
       <build>
@@ -519,7 +481,6 @@
         </plugins>
       </build>
     </profile>
-
     <profile>
       <id>eclipse</id>
       <activation>
