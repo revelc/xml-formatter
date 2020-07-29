@@ -334,6 +334,7 @@ public class XMLTagFormatter {
         /**
          * @param tagText
          *            text of an XML tag
+         *
          * @return extracted XML element name
          */
         protected String getElementName(String tagText) throws ParseException {
@@ -453,6 +454,7 @@ public class XMLTagFormatter {
          *            the line in which spaces are to be expanded
          * @param tabWidth
          *            number of spaces to substitute for a tab
+         *
          * @return length of the line with tabs expanded to spaces
          */
         protected int tabExpandedLineWidth(String line, int tabWidth) {
