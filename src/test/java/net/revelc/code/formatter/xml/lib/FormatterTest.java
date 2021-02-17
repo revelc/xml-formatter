@@ -74,6 +74,24 @@ public class FormatterTest {
     }
 
     @Test
+    public void testIndentationReset() throws Exception {
+        // reusing a formatter on a malformed xml document without a balanced pair of end tags should
+        // not interfere with the formatter's indentation of subsequent files
+        FormattingPreferences prefs = new FormattingPreferences();
+        prefs.setWellFormedValidation(FormattingPreferences.IGNORE);
+        XmlDocumentFormatter formatter = new XmlDocumentFormatter(System.lineSeparator(), prefs);
+        // this file contains an opening tag, but not a corresponding closing tag
+        String inXml = new String(Files.readAllBytes(Paths.get("src/test/resources/malformed.xml")),
+                StandardCharsets.UTF_8);
+        // format the malformed file once and ignore any errors
+        String outXml = formatter.format(inXml);
+        // format the malformed file a second time and ignore any errors
+        String outXml2 = formatter.format(inXml);
+        // both format attempts should result in content indented the same
+        assertEquals(outXml, outXml2);
+    }
+
+    @Test
     public void testNoRootElement() throws Exception {
         XmlDocumentFormatter formatter = new XmlDocumentFormatter(System.lineSeparator(), new FormattingPreferences());
         String inXml = new String(Files.readAllBytes(Paths.get("src/test/resources/sample-orca5-deps.xml")),
