@@ -18,19 +18,31 @@ package net.revelc.code.formatter.xml.lib;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
+import java.util.stream.IntStream;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
-import org.xml.sax.*;
+import org.xml.sax.ErrorHandler;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
+import org.xml.sax.XMLReader;
 
 public class XmlDocumentFormatter {
 
     private final String fDefaultLineDelimiter;
     private final FormattingPreferences prefs;
-    private int depth;
-    private boolean lastNodeWasText;
-    private StringBuilder formattedXml;
+
+    /**
+     * Track the format state separately for each new call to {@link XmlDocumentFormatter#format(String)}, so the
+     * {@link XmlDocumentFormatter} object can be reused.
+     */
+    private static class FormatState {
+        private int depth = 0;
+        private boolean lastNodeWasText = false;
+        private StringBuilder out = new StringBuilder(200);
+    }
 
     public XmlDocumentFormatter() {
         this(System.lineSeparator(), new FormattingPreferences());
@@ -41,36 +53,36 @@ public class XmlDocumentFormatter {
     }
 
     public XmlDocumentFormatter(String defaultLineDelimiter, FormattingPreferences prefs) {
-        this.depth = -1;
         this.fDefaultLineDelimiter = defaultLineDelimiter;
         this.prefs = prefs;
     }
 
-    private void copyNode(Reader reader, StringBuilder out) throws IOException {
+    private void copyNode(Reader reader, FormatState state) throws IOException {
         TagReader tag = TagReaderFactory.createTagReaderFor(reader);
-        depth = depth + tag.getPreTagDepthModifier();
+        state.depth += tag.getPreTagDepthModifier();
 
-        if (!lastNodeWasText) {
+        if (!state.lastNodeWasText) {
 
-            if (tag.startsOnNewline() && !hasNewlineAlready(out)) {
-                out.append(fDefaultLineDelimiter);
+            if (tag.startsOnNewline() && !hasNewlineAlready(state)) {
+                state.out.append(fDefaultLineDelimiter);
             }
 
             if (tag.requiresInitialIndent()) {
-                out.append(indent(prefs.getCanonicalIndent()));
+                indent(state.depth, state.out);
             }
         }
 
         if (tag instanceof XmlElementReader) {
-            out.append(new XMLTagFormatter().format(tag.getTagText(), indent(prefs.getCanonicalIndent()),
+            StringBuilder indentBuilder = new StringBuilder(30);
+            indent(state.depth, indentBuilder);
+            state.out.append(new XMLTagFormatter().format(tag.getTagText(), indentBuilder.toString(),
                     fDefaultLineDelimiter, prefs));
         } else {
-            out.append(tag.getTagText());
+            state.out.append(tag.getTagText());
         }
 
-        depth = depth + tag.getPostTagDepthModifier();
-        lastNodeWasText = tag.isTextNode();
-
+        state.depth += tag.getPostTagDepthModifier();
+        state.lastNodeWasText = tag.isTextNode();
     }
 
     public String format(String documentText) {
@@ -79,12 +91,8 @@ public class XmlDocumentFormatter {
         }
 
         Reader reader = new StringReader(documentText);
-        formattedXml = new StringBuilder();
+        FormatState state = new FormatState();
 
-        if (depth == -1) {
-            depth = 0;
-        }
-        lastNodeWasText = false;
         try {
             while (true) {
                 reader.mark(1);
@@ -92,7 +100,7 @@ public class XmlDocumentFormatter {
                 reader.reset();
 
                 if (intChar != -1) {
-                    copyNode(reader, formattedXml);
+                    copyNode(reader, state);
                 } else {
                     break;
                 }
@@ -101,7 +109,7 @@ public class XmlDocumentFormatter {
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-        return formattedXml.toString();
+        return state.out.toString();
     }
 
     private void validateWellFormedness(String documentText) {
@@ -127,17 +135,13 @@ public class XmlDocumentFormatter {
         }
     }
 
-    private boolean hasNewlineAlready(StringBuilder out) {
-        return out.lastIndexOf("\n") == formattedXml.length() - 1 //$NON-NLS-1$
-                || out.lastIndexOf("\r") == formattedXml.length() - 1; //$NON-NLS-1$
+    private static boolean hasNewlineAlready(FormatState state) {
+        return state.out.lastIndexOf("\n") == state.out.length() - 1 //$NON-NLS-1$
+                || state.out.lastIndexOf("\r") == state.out.length() - 1; //$NON-NLS-1$
     }
 
-    private String indent(String canonicalIndent) {
-        StringBuilder indent = new StringBuilder(30);
-        for (int i = 0; i < depth; i++) {
-            indent.append(canonicalIndent);
-        }
-        return indent.toString();
+    private void indent(int depth, StringBuilder out) {
+        IntStream.range(0, depth).forEach(i -> out.append(prefs.getCanonicalIndent()));
     }
 
     private static class CommentReader extends TagReader {
@@ -300,10 +304,10 @@ public class XmlDocumentFormatter {
 
             String startOfTag = String.valueOf(buf);
 
-            for (int i = 0; i < tagReaders.length; i++) {
-                if (startOfTag.startsWith(tagReaders[i].getStartOfTag())) {
-                    tagReaders[i].setReader(reader);
-                    return tagReaders[i];
+            for (TagReader tagReader : tagReaders) {
+                if (startOfTag.startsWith(tagReader.getStartOfTag())) {
+                    tagReader.setReader(reader);
+                    return tagReader;
                 }
             }
             // else
