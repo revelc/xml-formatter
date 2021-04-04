@@ -77,6 +77,11 @@ public class XmlDocumentFormatter {
             indent(state.depth, indentBuilder);
             state.out.append(new XMLTagFormatter().format(tag.getTagText(), indentBuilder.toString(),
                     fDefaultLineDelimiter, prefs));
+        } else if (tag instanceof CommentReader) {
+            StringBuilder indentBuilder = new StringBuilder(30);
+            indent(state.depth, indentBuilder);
+            state.out.append(new CommentFormatter().format(tag.getTagText(), indentBuilder.toString(),
+                    fDefaultLineDelimiter, prefs));
         } else {
             state.out.append(tag.getTagText());
         }
@@ -174,6 +179,11 @@ public class XmlDocumentFormatter {
                 }
             }
             return node.toString();
+        }
+
+        @Override
+        public boolean requiresInitialIndent() {
+            return false;
         }
     }
 
