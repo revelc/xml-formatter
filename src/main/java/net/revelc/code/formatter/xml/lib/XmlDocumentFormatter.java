@@ -18,6 +18,9 @@ package net.revelc.code.formatter.xml.lib;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.function.Supplier;
 import java.util.stream.IntStream;
 
 import javax.xml.parsers.SAXParser;
@@ -288,12 +291,16 @@ public class XmlDocumentFormatter {
     }
 
     private static class TagReaderFactory {
+        private static final Map<String, Supplier<TagReader>> tagReaders;
 
-        // Warning: the order of the Array is important!
-        private static TagReader[] tagReaders = new TagReader[] { new CommentReader(), new DoctypeDeclarationReader(),
-                new ProcessingInstructionReader(), new XmlElementReader() };
-
-        private static TagReader textNodeReader = new TextReader();
+        static {
+            tagReaders = new LinkedHashMap<>(4);
+            // Warning: the order of the selection is important
+            tagReaders.put("<!--", CommentReader::new);
+            tagReaders.put("<!", DoctypeDeclarationReader::new);
+            tagReaders.put("<?", ProcessingInstructionReader::new);
+            tagReaders.put("<", XmlElementReader::new);
+        }
 
         public static TagReader createTagReaderFor(Reader reader) throws IOException {
 
@@ -304,13 +311,15 @@ public class XmlDocumentFormatter {
 
             String startOfTag = String.valueOf(buf);
 
-            for (TagReader tagReader : tagReaders) {
-                if (startOfTag.startsWith(tagReader.getStartOfTag())) {
+            for (Map.Entry<String, Supplier<TagReader>> entry : tagReaders.entrySet()) {
+                if (startOfTag.startsWith(entry.getKey())) {
+                    TagReader tagReader = entry.getValue().get();
                     tagReader.setReader(reader);
                     return tagReader;
                 }
             }
             // else
+            TagReader textNodeReader = new TextReader();
             textNodeReader.setReader(reader);
             return textNodeReader;
         }
