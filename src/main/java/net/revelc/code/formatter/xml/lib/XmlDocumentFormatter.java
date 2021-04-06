@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Copyright (c) 2004, 2011 John-Mason P. Shackelford and others.,
- *               2019 Jose Montoya
+ *               2019, 2021 Jose Montoya
  *
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
@@ -12,12 +12,16 @@
  *     John-Mason P. Shackelford - initial API and implementation
  * 	   IBM Corporation - bug fixes
  * 	   Jose Montoya - Modified implementation outside Eclipse Platform
+ * 	                - Add thread safety to TagReaderFactory
  *******************************************************************************/
 package net.revelc.code.formatter.xml.lib;
 
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.function.Supplier;
 import java.util.stream.IntStream;
 
 import javax.xml.parsers.SAXParser;
@@ -288,12 +292,16 @@ public class XmlDocumentFormatter {
     }
 
     private static class TagReaderFactory {
+        private static final Map<String, Supplier<TagReader>> tagReaders;
 
-        // Warning: the order of the Array is important!
-        private static TagReader[] tagReaders = new TagReader[] { new CommentReader(), new DoctypeDeclarationReader(),
-                new ProcessingInstructionReader(), new XmlElementReader() };
-
-        private static TagReader textNodeReader = new TextReader();
+        static {
+            tagReaders = new LinkedHashMap<>(4);
+            // Warning: the order of the selection is important
+            tagReaders.put("<!--", CommentReader::new);
+            tagReaders.put("<!", DoctypeDeclarationReader::new);
+            tagReaders.put("<?", ProcessingInstructionReader::new);
+            tagReaders.put("<", XmlElementReader::new);
+        }
 
         public static TagReader createTagReaderFor(Reader reader) throws IOException {
 
@@ -304,13 +312,15 @@ public class XmlDocumentFormatter {
 
             String startOfTag = String.valueOf(buf);
 
-            for (TagReader tagReader : tagReaders) {
-                if (startOfTag.startsWith(tagReader.getStartOfTag())) {
+            for (Map.Entry<String, Supplier<TagReader>> entry : tagReaders.entrySet()) {
+                if (startOfTag.startsWith(entry.getKey())) {
+                    TagReader tagReader = entry.getValue().get();
                     tagReader.setReader(reader);
                     return tagReader;
                 }
             }
             // else
+            TagReader textNodeReader = new TextReader();
             textNodeReader.setReader(reader);
             return textNodeReader;
         }
