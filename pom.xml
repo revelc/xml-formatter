@@ -12,7 +12,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>net.revelc.code.formatter</groupId>
   <artifactId>xml-formatter</artifactId>
-  <version>0.3.0-SNAPSHOT</version>
+  <version>0.2.2</version>
   <packaging>jar</packaging>
   <name>xml-formatter</name>
   <description>XML Formatter for use with formatter-maven-plugin</description>
@@ -38,7 +38,7 @@
   <scm>
     <connection>scm:git:https://github.com/revelc/xml-formatter.git</connection>
     <developerConnection>scm:git:git@github.com/revelc/xml-formatter.git</developerConnection>
-    <tag>HEAD</tag>
+    <tag>xml-formatter-0.2.2</tag>
     <url>https://github.com/revelc/xml-formatter</url>
   </scm>
   <issueManagement>
