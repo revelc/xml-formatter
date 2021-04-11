@@ -1,24 +1,27 @@
-/*******************************************************************************
- * Copyright (c) 2019 Jose Montoya
- *
- * This program and the accompanying materials are made
- * available under the terms of the Eclipse Public License 2.0
- * which is available at https://www.eclipse.org/legal/epl-2.0/
- *
- * SPDX-License-Identifier: EPL-2.0
- *******************************************************************************/
 package net.revelc.code.formatter.xml.lib;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import org.junit.jupiter.api.Test;
 
 class FormatterTest {
+
+    @Test
+    void testDeleteBlankLines() throws IOException {
+        FormattingPreferences prefs = new FormattingPreferences();
+        prefs.setDeleteBlankLines(true);
+        XmlDocumentFormatter formatter = new XmlDocumentFormatter(System.lineSeparator(), prefs);
+
+        String inXml = Files.readString(Paths.get("src/test/resources/test-space-input.xml"));
+        String outXml = formatter.format(inXml);
+        assertEquals(outXml, Files.readString(Paths.get("src/test/resources/test-space-expected.xml")));
+    }
 
     @Test
     void testDefaultPreferences() throws Exception {

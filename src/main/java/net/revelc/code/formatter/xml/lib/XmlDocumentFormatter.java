@@ -82,7 +82,11 @@ public class XmlDocumentFormatter {
             state.out.append(new XMLTagFormatter().format(tag.getTagText(), indentBuilder.toString(),
                     fDefaultLineDelimiter, prefs));
         } else {
-            state.out.append(tag.getTagText());
+            String tagText = tag.getTagText();
+            if (!prefs.getDeleteBlankLines()
+                    || (prefs.getDeleteBlankLines() && tagText != null && !tagText.isBlank())) {
+                state.out.append(tagText);
+            }
         }
 
         state.depth += tag.getPostTagDepthModifier();
