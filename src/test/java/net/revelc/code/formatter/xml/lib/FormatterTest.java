@@ -28,13 +28,12 @@ public class FormatterTest {
     @Test
     public void testDeleteBlankLines() throws IOException {
 	FormattingPreferences prefs = new FormattingPreferences();
-	prefs.setSplitMultiAttrs(true);
+	prefs.setDeleteBlankLines(true);
 	XmlDocumentFormatter formatter = new XmlDocumentFormatter(System.lineSeparator(), prefs);
 
 	String inXml = new String(Files.readAllBytes(Paths.get("src/test/resources/test-space-input.xml")),
 		StandardCharsets.UTF_8);
 	String outXml = formatter.format(inXml);
-
 	assertEquals(outXml, new String(Files.readAllBytes(Paths.get("src/test/resources/test-space-expected.xml")),
 		StandardCharsets.UTF_8));
     }
