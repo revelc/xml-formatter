@@ -12,6 +12,8 @@
  *     John-Mason P. Shackelford - initial API and implementation
  * 	   IBM Corporation - bug fixes
  * 	   Jose Montoya - Modified implementation outside Eclipse Platform
+ * 
+ *     Saikiran Revuru - Add settings to delete blank lines
  *******************************************************************************/
 package net.revelc.code.formatter.xml.lib;
 
@@ -26,6 +28,16 @@ public class FormattingPreferences {
     private int tabWidth = 4;
     private boolean splitMultiAttrs = false;
     private String wellFormedValidation = WARN;
+    private boolean deleteBlankLines = false;
+    
+    public boolean getDeleteBlankLines() {
+	return deleteBlankLines;
+    }
+
+    public void setDeleteBlankLines(Boolean deleteBlankLines) {
+   	if (deleteBlankLines != null)
+   	    this.deleteBlankLines = deleteBlankLines;
+    }
 
     public void setMaxLineLength(Integer maxLineLength) {
         if (maxLineLength != null)

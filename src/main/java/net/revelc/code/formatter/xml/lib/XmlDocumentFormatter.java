@@ -13,6 +13,7 @@
  * 	   IBM Corporation - bug fixes
  * 	   Jose Montoya - Modified implementation outside Eclipse Platform
  * 	                - Add thread safety to TagReaderFactory
+ *     Saikiran Revuru - Modified copyNode method to delete blank lines
  *******************************************************************************/
 package net.revelc.code.formatter.xml.lib;
 
@@ -82,8 +83,12 @@ public class XmlDocumentFormatter {
             state.out.append(new XMLTagFormatter().format(tag.getTagText(), indentBuilder.toString(),
                     fDefaultLineDelimiter, prefs));
         } else {
-            state.out.append(tag.getTagText());
-        }
+	    String tagText = tag.getTagText();
+	    if (!prefs.getDeleteBlankLines()
+		    || (prefs.getDeleteBlankLines() && tagText != null && !tagText.trim().equalsIgnoreCase(""))) {
+		state.out.append(tagText);
+	    }
+	}
 
         state.depth += tag.getPostTagDepthModifier();
         state.lastNodeWasText = tag.isTextNode();

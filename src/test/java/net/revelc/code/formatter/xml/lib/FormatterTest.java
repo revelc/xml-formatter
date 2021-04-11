@@ -6,6 +6,9 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
+ * 
+ * Contributors:
+ *     Saikiran Revuru - Added test case testDeleteBlankLines 
  *******************************************************************************/
 package net.revelc.code.formatter.xml.lib;
 
@@ -13,6 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -20,6 +24,20 @@ import java.nio.file.Paths;
 import org.junit.jupiter.api.Test;
 
 public class FormatterTest {
+    
+    @Test
+    public void testDeleteBlankLines() throws IOException {
+	FormattingPreferences prefs = new FormattingPreferences();
+	prefs.setSplitMultiAttrs(true);
+	XmlDocumentFormatter formatter = new XmlDocumentFormatter(System.lineSeparator(), prefs);
+
+	String inXml = new String(Files.readAllBytes(Paths.get("src/test/resources/test-space-input.xml")),
+		StandardCharsets.UTF_8);
+	String outXml = formatter.format(inXml);
+
+	assertEquals(outXml, new String(Files.readAllBytes(Paths.get("src/test/resources/test-space-expected.xml")),
+		StandardCharsets.UTF_8));
+    }
 
     @Test
     public void testDefaultPreferences() throws Exception {
