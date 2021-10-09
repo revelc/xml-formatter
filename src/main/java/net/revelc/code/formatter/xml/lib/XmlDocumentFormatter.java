@@ -35,7 +35,6 @@ import org.xml.sax.XMLReader;
 
 public class XmlDocumentFormatter {
 
-    private final String fDefaultLineDelimiter;
     private final FormattingPreferences prefs;
 
     /**
@@ -49,26 +48,21 @@ public class XmlDocumentFormatter {
     }
 
     public XmlDocumentFormatter() {
-        this(System.lineSeparator(), new FormattingPreferences());
+        this(new FormattingPreferences());
     }
 
     public XmlDocumentFormatter(FormattingPreferences prefs) {
-        this(System.lineSeparator(), prefs);
-    }
-
-    public XmlDocumentFormatter(String defaultLineDelimiter, FormattingPreferences prefs) {
-        this.fDefaultLineDelimiter = defaultLineDelimiter;
         this.prefs = prefs;
     }
 
-    private void copyNode(Reader reader, FormatState state) throws IOException {
+    private void copyNode(Reader reader, FormatState state, String lineDelimiter) throws IOException {
         TagReader tag = TagReaderFactory.createTagReaderFor(reader);
         state.depth += tag.getPreTagDepthModifier();
 
         if (!state.lastNodeWasText) {
 
             if (tag.startsOnNewline() && !hasNewlineAlready(state)) {
-                state.out.append(fDefaultLineDelimiter);
+                state.out.append(lineDelimiter);
             }
 
             if (tag.requiresInitialIndent()) {
@@ -79,8 +73,8 @@ public class XmlDocumentFormatter {
         if (tag instanceof XmlElementReader) {
             StringBuilder indentBuilder = new StringBuilder(30);
             indent(state.depth, indentBuilder);
-            state.out.append(new XMLTagFormatter().format(tag.getTagText(), indentBuilder.toString(),
-                    fDefaultLineDelimiter, prefs));
+            state.out.append(
+                    new XMLTagFormatter().format(tag.getTagText(), indentBuilder.toString(), lineDelimiter, prefs));
         } else {
             state.out.append(tag.getTagText());
         }
@@ -89,7 +83,7 @@ public class XmlDocumentFormatter {
         state.lastNodeWasText = tag.isTextNode();
     }
 
-    public String format(String documentText) {
+    public String format(String documentText, String lineDelimiter) {
         if (!prefs.getWellFormedValidation().equals(FormattingPreferences.IGNORE)) {
             validateWellFormedness(documentText);
         }
@@ -104,7 +98,7 @@ public class XmlDocumentFormatter {
                 reader.reset();
 
                 if (intChar != -1) {
-                    copyNode(reader, state);
+                    copyNode(reader, state, lineDelimiter);
                 } else {
                     break;
                 }
