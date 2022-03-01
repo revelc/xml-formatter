@@ -67,6 +67,8 @@
   </distributionManagement>
   <properties>
     <junit.version>5.8.2</junit.version>
+    <!-- because of https://issues.apache.org/jira/browse/MCOMPILER-485 -->
+    <maven.compiler.createMissingPackageInfoClass>false</maven.compiler.createMissingPackageInfoClass>
     <maven.compiler.release>8</maven.compiler.release>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
@@ -128,7 +130,7 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.9.0</version>
+          <version>3.10.0</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -235,12 +237,13 @@
         <configuration>
           <createBackupFile>false</createBackupFile>
           <expandEmptyElements>false</expandEmptyElements>
-          <lineSeparator>\n</lineSeparator>
           <keepBlankLines>false</keepBlankLines>
+          <lineSeparator>\n</lineSeparator>
           <nrOfIndentSpace>2</nrOfIndentSpace>
           <predefinedSortOrder>recommended_2008_06</predefinedSortOrder>
           <sortDependencies>scope,groupId,artifactId</sortDependencies>
           <sortProperties>true</sortProperties>
+          <spaceBeforeCloseEmptyElement>true</spaceBeforeCloseEmptyElement>
           <verifyFail>Stop</verifyFail>
         </configuration>
         <executions>
