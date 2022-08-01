@@ -66,7 +66,7 @@
     </site>
   </distributionManagement>
   <properties>
-    <junit.version>5.9.0-RC1</junit.version>
+    <junit.version>5.9.0</junit.version>
     <maven.compiler.release>8</maven.compiler.release>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
