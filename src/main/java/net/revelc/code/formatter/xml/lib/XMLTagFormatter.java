@@ -112,19 +112,22 @@ public class XMLTagFormatter {
 
         public int minimumLength() {
             int length = 2; // for the < >
-            if (this.isClosed())
+            if (this.isClosed()) {
                 length++; // if we need to add an />
+            }
             length += this.getElementName().length();
-            if (this.attributeCount() > 0 || this.isClosed())
+            if (this.attributeCount() > 0 || this.isClosed()) {
                 length++;
+            }
             for (int i = 0; i < this.attributeCount(); i++) {
                 AttributePair attributePair = this.getAttributePair(i);
                 length += attributePair.getAttribute().length();
                 length += attributePair.getValue().length();
                 length += 4; // equals sign, quote characters & trailing space
             }
-            if (this.attributeCount() > 0 && !this.isClosed())
+            if (this.attributeCount() > 0 && !this.isClosed()) {
                 length--;
+            }
             return length;
         }
 
@@ -138,8 +141,9 @@ public class XMLTagFormatter {
             StringBuilder sb = new StringBuilder(500);
             sb.append('<');
             sb.append(this.getElementName());
-            if (this.attributeCount() > 0 || this.isClosed())
+            if (this.attributeCount() > 0 || this.isClosed()) {
                 sb.append(' ');
+            }
 
             for (int i = 0; i < this.attributeCount(); i++) {
                 AttributePair attributePair = this.getAttributePair(i);
@@ -148,11 +152,13 @@ public class XMLTagFormatter {
                 sb.append(attributePair.getQuote());
                 sb.append(attributePair.getValue());
                 sb.append(attributePair.getQuote());
-                if (this.isClosed() || i != this.attributeCount() - 1)
+                if (this.isClosed() || i != this.attributeCount() - 1) {
                     sb.append(' ');
+                }
             }
-            if (this.isClosed())
+            if (this.isClosed()) {
                 sb.append('/');
+            }
             sb.append('>');
             return sb.toString();
         }
@@ -308,16 +314,14 @@ public class XMLTagFormatter {
                             throw new ParseException("Unexpected '" + c //$NON-NLS-1$
                                     + "' when parsing:\n\t" + elementText); //$NON-NLS-1$
                         }
-                    } else {
-                        if (!Character.isWhitespace(c)) {
-                            if (mode.isAttributeNameSearching()) {
-                                // we found the start of an attribute name
-                                mode.setAttributeNameFound();
-                                currentAttributeName = new StringBuilder(255);
-                                currentAttributeName.append(c);
-                            } else if (mode.isAttributeNameFound()) {
-                                currentAttributeName.append(c);
-                            }
+                    } else if (!Character.isWhitespace(c)) {
+                        if (mode.isAttributeNameSearching()) {
+                            // we found the start of an attribute name
+                            mode.setAttributeNameFound();
+                            currentAttributeName = new StringBuilder(255);
+                            currentAttributeName.append(c);
+                        } else if (mode.isAttributeNameFound()) {
+                            currentAttributeName.append(c);
                         }
                     }
                     break;
@@ -340,13 +344,12 @@ public class XMLTagFormatter {
         protected String getElementName(String tagText) throws ParseException {
             if (!tagText.equals(this.fParseText) || this.fElementName == null) {
                 int endOfTag = tagEnd(tagText);
-                if ((tagText.length() > 2) && (endOfTag > 1)) {
-                    this.fParseText = tagText;
-                    this.fElementName = tagText.substring(1, endOfTag);
-                } else {
+                if (tagText.length() <= 2 || endOfTag <= 1) {
                     throw new ParseException("No element name for the tag:\n\t" //$NON-NLS-1$
                             + tagText);
                 }
+                this.fParseText = tagText;
+                this.fElementName = tagText.substring(1, endOfTag);
             }
             return fElementName;
         }
@@ -391,8 +394,9 @@ public class XMLTagFormatter {
         private int countChar(char searchChar, String inTargetString) {
             StringCharacterIterator iter = new StringCharacterIterator(inTargetString);
             int i = 0;
-            if (iter.first() == searchChar)
+            if (iter.first() == searchChar) {
                 i++;
+            }
             while (iter.getIndex() < iter.getEndIndex()) {
                 if (iter.next() == searchChar) {
                     i++;
@@ -437,7 +441,8 @@ public class XMLTagFormatter {
 
                 return sb.toString();
 
-            } else if (prefs.wrapLongTags()
+            }
+            if (prefs.wrapLongTags()
                     && lineRequiresWrap(indent + tag.toString(), prefs.getMaximumLineWidth(), prefs.getTabWidth())) {
                 return wrapTag(tag, indent, lineDelimiter);
             }

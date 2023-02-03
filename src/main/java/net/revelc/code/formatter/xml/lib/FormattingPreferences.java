@@ -84,13 +84,12 @@ public class FormattingPreferences {
     }
 
     public void setWellFormedValidation(String wellFormedValidation) {
-        if (wellFormedValidation.equals(IGNORE) || wellFormedValidation.equals(FAIL)
-                || wellFormedValidation.equals(WARN)) {
-            this.wellFormedValidation = wellFormedValidation;
-        } else {
+        if (!wellFormedValidation.equals(IGNORE) && !wellFormedValidation.equals(FAIL)
+                && !wellFormedValidation.equals(WARN)) {
             throw new IllegalArgumentException(
                     "Invalid configuration value for well formed validation: " + wellFormedValidation);
         }
+        this.wellFormedValidation = wellFormedValidation;
     }
 
     public void setWrapLongLines(boolean wrapLongLines) {

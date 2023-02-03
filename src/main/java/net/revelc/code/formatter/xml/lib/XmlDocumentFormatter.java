@@ -108,11 +108,10 @@ public class XmlDocumentFormatter {
                 int intChar = reader.read();
                 reader.reset();
 
-                if (intChar != -1) {
-                    copyNode(reader, state);
-                } else {
+                if (intChar == -1) {
                     break;
                 }
+                copyNode(reader, state);
             }
             reader.close();
         } catch (IOException e) {
@@ -137,12 +136,11 @@ public class XmlDocumentFormatter {
             reader.setErrorHandler(errorHandler);
             reader.parse(new InputSource(new StringReader(documentText)));
         } catch (Exception exception) {
-            if (exception instanceof SAXParseException
-                    && prefs.getWellFormedValidation().equals(FormattingPreferences.WARN)) {
-                System.err.println("WARN: " + exception.getMessage());
-            } else {
+            if (!(exception instanceof SAXParseException)
+                    || !prefs.getWellFormedValidation().equals(FormattingPreferences.WARN)) {
                 throw new IllegalArgumentException(exception);
             }
+            System.err.println("WARN: " + exception.getMessage());
         }
     }
 
@@ -373,8 +371,9 @@ public class XmlDocumentFormatter {
 
                 reader.mark(1);
                 int intChar = reader.read();
-                if (intChar == -1)
+                if (intChar == -1) {
                     break;
+                }
 
                 char c = (char) intChar;
                 if (c == '<') {
@@ -439,13 +438,10 @@ public class XmlDocumentFormatter {
 
         @Override
         public int getPostTagDepthModifier() {
-            if (getTagText().endsWith("/>") || getTagText().endsWith("/ >")) { //$NON-NLS-1$ //$NON-NLS-2$
+            if (getTagText().endsWith("/>") || getTagText().endsWith("/ >") || getTagText().startsWith("</")) { //$NON-NLS-1$
                 return 0;
-            } else if (getTagText().startsWith("</")) { //$NON-NLS-1$
-                return 0;
-            } else {
-                return +1;
             }
+            return +1;
         }
 
         @Override
