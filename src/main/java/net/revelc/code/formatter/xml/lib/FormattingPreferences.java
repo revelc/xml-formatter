@@ -84,7 +84,8 @@ public class FormattingPreferences {
     }
 
     public void setWellFormedValidation(String wellFormedValidation) {
-        if (!wellFormedValidation.equals(IGNORE) && !wellFormedValidation.equals(FAIL) && !wellFormedValidation.equals(WARN)) {
+        if (!wellFormedValidation.equals(IGNORE) && !wellFormedValidation.equals(FAIL)
+                && !wellFormedValidation.equals(WARN)) {
             throw new IllegalArgumentException(
                     "Invalid configuration value for well formed validation: " + wellFormedValidation);
         }
