@@ -24,22 +24,19 @@ public class FormattingPreferences {
     private boolean wrapLongLines = true;
     private boolean tabInsteadOfSpaces = true;
     private int tabWidth = 4;
-    private boolean splitMultiAttrs = false;
+    private boolean splitMultiAttrs;
     private String wellFormedValidation = WARN;
 
-    public void setMaxLineLength(Integer maxLineLength) {
-        if (maxLineLength != null)
-            this.maxLineLength = maxLineLength;
+    public void setMaxLineLength(int maxLineLength) {
+        this.maxLineLength = maxLineLength;
     }
 
-    public void setWrapLongLines(Boolean wrapLongLines) {
-        if (wrapLongLines != null)
-            this.wrapLongLines = wrapLongLines;
+    public void setWrapLongLines(boolean wrapLongLines) {
+        this.wrapLongLines = wrapLongLines;
     }
 
-    public void setTabInsteadOfSpaces(Boolean tabInsteadOfSpaces) {
-        if (tabInsteadOfSpaces != null)
-            this.tabInsteadOfSpaces = tabInsteadOfSpaces;
+    public void setTabInsteadOfSpaces(boolean tabInsteadOfSpaces) {
+        this.tabInsteadOfSpaces = tabInsteadOfSpaces;
     }
 
     public String getCanonicalIndent() {
@@ -69,9 +66,8 @@ public class FormattingPreferences {
         return tabWidth;
     }
 
-    public void setTabWidth(Integer tabWidth) {
-        if (tabWidth != null)
-            this.tabWidth = tabWidth;
+    public void setTabWidth(int tabWidth) {
+        this.tabWidth = tabWidth;
     }
 
     public boolean useTabInsteadOfSpaces() {
@@ -82,9 +78,8 @@ public class FormattingPreferences {
         return splitMultiAttrs;
     }
 
-    public void setSplitMultiAttrs(Boolean setSplitMultiAttrs) {
-        if (setSplitMultiAttrs != null)
-            this.splitMultiAttrs = setSplitMultiAttrs;
+    public void setSplitMultiAttrs(boolean setSplitMultiAttrs) {
+        this.splitMultiAttrs = setSplitMultiAttrs;
     }
 
     public String getWellFormedValidation() {
