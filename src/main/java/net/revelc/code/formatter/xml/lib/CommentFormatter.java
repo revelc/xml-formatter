@@ -34,9 +34,8 @@ public class CommentFormatter {
                 Matcher m = ORIGINAL_INDENT_PATTERN.matcher(line);
                 if (m.matches()) {
                     return m.group("indent");
-                } else {
-                    return null;
                 }
+                return null;
             }
         }
         return null;
@@ -45,8 +44,7 @@ public class CommentFormatter {
     private static String removeOriginalIndent(String line, String indent) {
         if (indent != null && line.startsWith(indent)) {
             return line.substring(indent.length());
-        } else {
-            return line;
         }
+        return line;
     }
 }
