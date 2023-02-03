@@ -26,6 +26,15 @@ public class FormattingPreferences {
     private int tabWidth = 4;
     private boolean splitMultiAttrs;
     private String wellFormedValidation = WARN;
+    private boolean deleteBlankLines;
+
+    public boolean getDeleteBlankLines() {
+        return deleteBlankLines;
+    }
+
+    public void setDeleteBlankLines(boolean deleteBlankLines) {
+        this.deleteBlankLines = deleteBlankLines;
+    }
 
     public void setMaxLineLength(int maxLineLength) {
         this.maxLineLength = maxLineLength;
