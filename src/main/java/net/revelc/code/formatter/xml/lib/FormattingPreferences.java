@@ -28,26 +28,6 @@ public class FormattingPreferences {
     private String wellFormedValidation = WARN;
     private boolean deleteBlankLines;
 
-    public boolean getDeleteBlankLines() {
-        return deleteBlankLines;
-    }
-
-    public void setDeleteBlankLines(boolean deleteBlankLines) {
-        this.deleteBlankLines = deleteBlankLines;
-    }
-
-    public void setMaxLineLength(int maxLineLength) {
-        this.maxLineLength = maxLineLength;
-    }
-
-    public void setWrapLongLines(boolean wrapLongLines) {
-        this.wrapLongLines = wrapLongLines;
-    }
-
-    public void setTabInsteadOfSpaces(boolean tabInsteadOfSpaces) {
-        this.tabInsteadOfSpaces = tabInsteadOfSpaces;
-    }
-
     public String getCanonicalIndent() {
         String canonicalIndent;
         if (useTabInsteadOfSpaces()) {
@@ -63,36 +43,44 @@ public class FormattingPreferences {
         return canonicalIndent;
     }
 
-    public int getMaximumLineWidth() {
-        return maxLineLength;
+    public boolean getDeleteBlankLines() {
+        return deleteBlankLines;
     }
 
-    public boolean wrapLongTags() {
-        return wrapLongLines;
+    public int getMaximumLineWidth() {
+        return maxLineLength;
     }
 
     public int getTabWidth() {
         return tabWidth;
     }
 
-    public void setTabWidth(int tabWidth) {
-        this.tabWidth = tabWidth;
-    }
-
-    public boolean useTabInsteadOfSpaces() {
-        return tabInsteadOfSpaces;
+    public String getWellFormedValidation() {
+        return wellFormedValidation;
     }
 
     public boolean isSplitMultiAttrs() {
         return splitMultiAttrs;
     }
 
+    public void setDeleteBlankLines(boolean deleteBlankLines) {
+        this.deleteBlankLines = deleteBlankLines;
+    }
+
+    public void setMaxLineLength(int maxLineLength) {
+        this.maxLineLength = maxLineLength;
+    }
+
     public void setSplitMultiAttrs(boolean setSplitMultiAttrs) {
         this.splitMultiAttrs = setSplitMultiAttrs;
     }
 
-    public String getWellFormedValidation() {
-        return wellFormedValidation;
+    public void setTabInsteadOfSpaces(boolean tabInsteadOfSpaces) {
+        this.tabInsteadOfSpaces = tabInsteadOfSpaces;
+    }
+
+    public void setTabWidth(int tabWidth) {
+        this.tabWidth = tabWidth;
     }
 
     public void setWellFormedValidation(String wellFormedValidation) {
@@ -103,5 +91,17 @@ public class FormattingPreferences {
             throw new IllegalArgumentException(
                     "Invalid configuration value for well formed validation: " + wellFormedValidation);
         }
+    }
+
+    public void setWrapLongLines(boolean wrapLongLines) {
+        this.wrapLongLines = wrapLongLines;
+    }
+
+    public boolean useTabInsteadOfSpaces() {
+        return tabInsteadOfSpaces;
+    }
+
+    public boolean wrapLongTags() {
+        return wrapLongLines;
     }
 }
