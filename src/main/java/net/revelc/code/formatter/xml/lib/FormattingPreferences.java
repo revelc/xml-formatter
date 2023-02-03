@@ -24,7 +24,7 @@ public class FormattingPreferences {
     private boolean wrapLongLines = true;
     private boolean tabInsteadOfSpaces = true;
     private int tabWidth = 4;
-    private boolean splitMultiAttrs = false;
+    private boolean splitMultiAttrs;
     private String wellFormedValidation = WARN;
 
     public void setMaxLineLength(Integer maxLineLength) {
