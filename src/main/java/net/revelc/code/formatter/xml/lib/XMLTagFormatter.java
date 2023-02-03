@@ -443,7 +443,8 @@ public class XMLTagFormatter {
 
                 return sb.toString();
 
-            } else if (prefs.wrapLongTags()
+            }
+            if (prefs.wrapLongTags()
                     && lineRequiresWrap(indent + tag.toString(), prefs.getMaximumLineWidth(), prefs.getTabWidth())) {
                 return wrapTag(tag, indent, lineDelimiter);
             }
