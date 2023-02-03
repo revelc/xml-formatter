@@ -314,16 +314,14 @@ public class XMLTagFormatter {
                             throw new ParseException("Unexpected '" + c //$NON-NLS-1$
                                     + "' when parsing:\n\t" + elementText); //$NON-NLS-1$
                         }
-                    } else {
-                        if (!Character.isWhitespace(c)) {
-                            if (mode.isAttributeNameSearching()) {
-                                // we found the start of an attribute name
-                                mode.setAttributeNameFound();
-                                currentAttributeName = new StringBuilder(255);
-                                currentAttributeName.append(c);
-                            } else if (mode.isAttributeNameFound()) {
-                                currentAttributeName.append(c);
-                            }
+                    } else if (!Character.isWhitespace(c)) {
+                        if (mode.isAttributeNameSearching()) {
+                            // we found the start of an attribute name
+                            mode.setAttributeNameFound();
+                            currentAttributeName = new StringBuilder(255);
+                            currentAttributeName.append(c);
+                        } else if (mode.isAttributeNameFound()) {
+                            currentAttributeName.append(c);
                         }
                     }
                     break;
