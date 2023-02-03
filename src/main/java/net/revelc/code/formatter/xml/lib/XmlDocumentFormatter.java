@@ -108,11 +108,10 @@ public class XmlDocumentFormatter {
                 int intChar = reader.read();
                 reader.reset();
 
-                if (intChar != -1) {
-                    copyNode(reader, state);
-                } else {
+                if (intChar == -1) {
                     break;
                 }
+                copyNode(reader, state);
             }
             reader.close();
         } catch (IOException e) {
@@ -137,12 +136,10 @@ public class XmlDocumentFormatter {
             reader.setErrorHandler(errorHandler);
             reader.parse(new InputSource(new StringReader(documentText)));
         } catch (Exception exception) {
-            if (exception instanceof SAXParseException
-                    && prefs.getWellFormedValidation().equals(FormattingPreferences.WARN)) {
-                System.err.println("WARN: " + exception.getMessage());
-            } else {
+            if (!(exception instanceof SAXParseException) || !prefs.getWellFormedValidation().equals(FormattingPreferences.WARN)) {
                 throw new IllegalArgumentException(exception);
             }
+            System.err.println("WARN: " + exception.getMessage());
         }
     }
 

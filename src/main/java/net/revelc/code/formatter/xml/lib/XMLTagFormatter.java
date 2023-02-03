@@ -340,13 +340,12 @@ public class XMLTagFormatter {
         protected String getElementName(String tagText) throws ParseException {
             if (!tagText.equals(this.fParseText) || this.fElementName == null) {
                 int endOfTag = tagEnd(tagText);
-                if ((tagText.length() > 2) && (endOfTag > 1)) {
-                    this.fParseText = tagText;
-                    this.fElementName = tagText.substring(1, endOfTag);
-                } else {
+                if (tagText.length() <= 2 || endOfTag <= 1) {
                     throw new ParseException("No element name for the tag:\n\t" //$NON-NLS-1$
                             + tagText);
                 }
+                this.fParseText = tagText;
+                this.fElementName = tagText.substring(1, endOfTag);
             }
             return fElementName;
         }
