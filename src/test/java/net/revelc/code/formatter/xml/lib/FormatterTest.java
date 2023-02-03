@@ -19,10 +19,10 @@ import java.nio.file.Paths;
 
 import org.junit.jupiter.api.Test;
 
-public class FormatterTest {
+class FormatterTest {
 
     @Test
-    public void testDefaultPreferences() throws Exception {
+    void testDefaultPreferences() throws Exception {
         XmlDocumentFormatter formatter = new XmlDocumentFormatter(System.lineSeparator(), new FormattingPreferences());
 
         String inXml = new String(Files.readAllBytes(Paths.get("src/test/resources/test-input.xml")),
@@ -34,7 +34,7 @@ public class FormatterTest {
     }
 
     @Test
-    public void testMultiLinedAttrs() throws Exception {
+    void testMultiLinedAttrs() throws Exception {
         FormattingPreferences prefs = new FormattingPreferences();
         prefs.setSplitMultiAttrs(true);
         XmlDocumentFormatter formatter = new XmlDocumentFormatter(System.lineSeparator(), prefs);
@@ -49,7 +49,7 @@ public class FormatterTest {
     }
 
     @Test
-    public void testNoWrapTags() throws Exception {
+    void testNoWrapTags() throws Exception {
         FormattingPreferences prefs = new FormattingPreferences();
         prefs.setWrapLongLines(false);
         XmlDocumentFormatter formatter = new XmlDocumentFormatter(System.lineSeparator(), prefs);
@@ -63,7 +63,7 @@ public class FormatterTest {
     }
 
     @Test
-    public void testMalformedCaught() throws Exception {
+    void testMalformedCaught() throws Exception {
         FormattingPreferences prefs = new FormattingPreferences();
         prefs.setWellFormedValidation(FormattingPreferences.FAIL);
         XmlDocumentFormatter formatter = new XmlDocumentFormatter(System.lineSeparator(), prefs);
@@ -74,7 +74,7 @@ public class FormatterTest {
     }
 
     @Test
-    public void testIndentationReset() throws Exception {
+    void testIndentationReset() throws Exception {
         // reusing a formatter on a malformed xml document without a balanced pair of end tags should
         // not interfere with the formatter's indentation of subsequent files
         FormattingPreferences prefs = new FormattingPreferences();
@@ -92,7 +92,7 @@ public class FormatterTest {
     }
 
     @Test
-    public void testNoRootElement() throws Exception {
+    void testNoRootElement() throws Exception {
         XmlDocumentFormatter formatter = new XmlDocumentFormatter(System.lineSeparator(), new FormattingPreferences());
         String inXml = new String(Files.readAllBytes(Paths.get("src/test/resources/sample-orca5-deps.xml")),
                 StandardCharsets.UTF_8);
@@ -101,7 +101,7 @@ public class FormatterTest {
     }
 
     @Test
-    public void testNoRootElementFails() throws Exception {
+    void testNoRootElementFails() throws Exception {
         FormattingPreferences prefs = new FormattingPreferences();
         prefs.setWellFormedValidation(FormattingPreferences.FAIL);
         XmlDocumentFormatter formatter = new XmlDocumentFormatter(System.lineSeparator(), prefs);
@@ -112,7 +112,7 @@ public class FormatterTest {
     }
 
     @Test
-    public void testNoDtdValidation() throws Exception {
+    void testNoDtdValidation() throws Exception {
         XmlDocumentFormatter formatter = new XmlDocumentFormatter(System.lineSeparator(), new FormattingPreferences());
         String inXml = new String(Files.readAllBytes(Paths.get("src/test/resources/dtd-test-input.xml")),
                 StandardCharsets.UTF_8);
