@@ -24,6 +24,7 @@ import java.util.Map;
 import java.util.function.Supplier;
 import java.util.stream.IntStream;
 
+import javax.xml.XMLConstants;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
@@ -129,6 +130,8 @@ public class XmlDocumentFormatter {
             factory.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
 
             SAXParser parser = factory.newSAXParser();
+            parser.setProperty(XMLConstants.ACCESS_EXTERNAL_DTD, "");
+            parser.setProperty(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
 
             XMLReader reader = parser.getXMLReader();
             reader.setErrorHandler(errorHandler);
