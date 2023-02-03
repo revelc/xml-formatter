@@ -15,7 +15,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 
 import org.junit.jupiter.api.Test;
 
@@ -29,6 +31,11 @@ class FormatterTest {
 
         String inXml = Files.readString(Paths.get("src/test/resources/test-space-input.xml"));
         String outXml = formatter.format(inXml);
+
+        Path path = Paths.get("target/formatted/test-space-expected-result.xml");
+        Files.createDirectories(path.getParent());
+        Files.writeString(path, outXml, StandardOpenOption.CREATE);
+
         assertEquals(outXml, Files.readString(Paths.get("src/test/resources/test-space-expected.xml")));
     }
 
@@ -38,6 +45,10 @@ class FormatterTest {
 
         String inXml = Files.readString(Paths.get("src/test/resources/test-input.xml"));
         String outXml = formatter.format(inXml);
+
+        Path path = Paths.get("target/formatted/default-output-result.xml");
+        Files.createDirectories(path.getParent());
+        Files.writeString(path, outXml, StandardOpenOption.CREATE);
 
         assertEquals(outXml, Files.readString(Paths.get("src/test/resources/default-output.xml")));
     }
@@ -51,6 +62,10 @@ class FormatterTest {
         String inXml = Files.readString(Paths.get("src/test/resources/test-input.xml"));
         String outXml = formatter.format(inXml);
 
+        Path path = Paths.get("target/formatted/multi-lined-attrs-output-result.xml");
+        Files.createDirectories(path.getParent());
+        Files.writeString(path, outXml, StandardOpenOption.CREATE);
+
         assertEquals(outXml, Files.readString(Paths.get("src/test/resources/multi-lined-attrs-output.xml")));
     }
 
@@ -62,6 +77,10 @@ class FormatterTest {
 
         String inXml = Files.readString(Paths.get("src/test/resources/test-input.xml"));
         String outXml = formatter.format(inXml);
+
+        Path path = Paths.get("target/formatted/no-wrap-tags-output-result.xml");
+        Files.createDirectories(path.getParent());
+        Files.writeString(path, outXml, StandardOpenOption.CREATE);
 
         assertEquals(outXml, Files.readString(Paths.get("src/test/resources/no-wrap-tags-output.xml")));
     }
