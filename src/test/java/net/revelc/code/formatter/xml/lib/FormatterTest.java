@@ -13,7 +13,6 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -25,12 +24,10 @@ class FormatterTest {
     void testDefaultPreferences() throws Exception {
         XmlDocumentFormatter formatter = new XmlDocumentFormatter(System.lineSeparator(), new FormattingPreferences());
 
-        String inXml = new String(Files.readAllBytes(Paths.get("src/test/resources/test-input.xml")),
-                StandardCharsets.UTF_8);
+        String inXml = Files.readString(Paths.get("src/test/resources/test-input.xml"));
         String outXml = formatter.format(inXml);
 
-        assertEquals(outXml, new String(Files.readAllBytes(Paths.get("src/test/resources/default-output.xml")),
-                StandardCharsets.UTF_8));
+        assertEquals(outXml, Files.readString(Paths.get("src/test/resources/default-output.xml")));
     }
 
     @Test
@@ -39,13 +36,10 @@ class FormatterTest {
         prefs.setSplitMultiAttrs(true);
         XmlDocumentFormatter formatter = new XmlDocumentFormatter(System.lineSeparator(), prefs);
 
-        String inXml = new String(Files.readAllBytes(Paths.get("src/test/resources/test-input.xml")),
-                StandardCharsets.UTF_8);
+        String inXml = Files.readString(Paths.get("src/test/resources/test-input.xml"));
         String outXml = formatter.format(inXml);
 
-        assertEquals(outXml,
-                new String(Files.readAllBytes(Paths.get("src/test/resources/multi-lined-attrs-output.xml")),
-                        StandardCharsets.UTF_8));
+        assertEquals(outXml, Files.readString(Paths.get("src/test/resources/multi-lined-attrs-output.xml")));
     }
 
     @Test
@@ -54,12 +48,10 @@ class FormatterTest {
         prefs.setWrapLongLines(false);
         XmlDocumentFormatter formatter = new XmlDocumentFormatter(System.lineSeparator(), prefs);
 
-        String inXml = new String(Files.readAllBytes(Paths.get("src/test/resources/test-input.xml")),
-                StandardCharsets.UTF_8);
+        String inXml = Files.readString(Paths.get("src/test/resources/test-input.xml"));
         String outXml = formatter.format(inXml);
 
-        assertEquals(outXml, new String(Files.readAllBytes(Paths.get("src/test/resources/no-wrap-tags-output.xml")),
-                StandardCharsets.UTF_8));
+        assertEquals(outXml, Files.readString(Paths.get("src/test/resources/no-wrap-tags-output.xml")));
     }
 
     @Test
@@ -67,8 +59,7 @@ class FormatterTest {
         FormattingPreferences prefs = new FormattingPreferences();
         prefs.setWellFormedValidation(FormattingPreferences.FAIL);
         XmlDocumentFormatter formatter = new XmlDocumentFormatter(System.lineSeparator(), prefs);
-        String inXml = new String(Files.readAllBytes(Paths.get("src/test/resources/malformed.xml")),
-                StandardCharsets.UTF_8);
+        String inXml = Files.readString(Paths.get("src/test/resources/malformed.xml"));
 
         assertThrows(IllegalArgumentException.class, () -> formatter.format(inXml));
     }
@@ -81,8 +72,7 @@ class FormatterTest {
         prefs.setWellFormedValidation(FormattingPreferences.IGNORE);
         XmlDocumentFormatter formatter = new XmlDocumentFormatter(System.lineSeparator(), prefs);
         // this file contains an opening tag, but not a corresponding closing tag
-        String inXml = new String(Files.readAllBytes(Paths.get("src/test/resources/malformed.xml")),
-                StandardCharsets.UTF_8);
+        String inXml = Files.readString(Paths.get("src/test/resources/malformed.xml"));
         // format the malformed file once and ignore any errors
         String outXml = formatter.format(inXml);
         // format the malformed file a second time and ignore any errors
@@ -94,8 +84,7 @@ class FormatterTest {
     @Test
     void testNoRootElement() throws Exception {
         XmlDocumentFormatter formatter = new XmlDocumentFormatter(System.lineSeparator(), new FormattingPreferences());
-        String inXml = new String(Files.readAllBytes(Paths.get("src/test/resources/sample-orca5-deps.xml")),
-                StandardCharsets.UTF_8);
+        String inXml = Files.readString(Paths.get("src/test/resources/sample-orca5-deps.xml"));
 
         assertDoesNotThrow(() -> formatter.format(inXml));
     }
@@ -105,8 +94,7 @@ class FormatterTest {
         FormattingPreferences prefs = new FormattingPreferences();
         prefs.setWellFormedValidation(FormattingPreferences.FAIL);
         XmlDocumentFormatter formatter = new XmlDocumentFormatter(System.lineSeparator(), prefs);
-        String inXml = new String(Files.readAllBytes(Paths.get("src/test/resources/sample-orca5-deps.xml")),
-                StandardCharsets.UTF_8);
+        String inXml = Files.readString(Paths.get("src/test/resources/sample-orca5-deps.xml"));
 
         assertThrows(IllegalArgumentException.class, () -> formatter.format(inXml));
     }
@@ -114,8 +102,7 @@ class FormatterTest {
     @Test
     void testNoDtdValidation() throws Exception {
         XmlDocumentFormatter formatter = new XmlDocumentFormatter(System.lineSeparator(), new FormattingPreferences());
-        String inXml = new String(Files.readAllBytes(Paths.get("src/test/resources/dtd-test-input.xml")),
-                StandardCharsets.UTF_8);
+        String inXml = Files.readString(Paths.get("src/test/resources/dtd-test-input.xml"));
 
         assertDoesNotThrow(() -> formatter.format(inXml));
     }
