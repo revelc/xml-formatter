@@ -370,8 +370,9 @@ public class XmlDocumentFormatter {
 
                 reader.mark(1);
                 int intChar = reader.read();
-                if (intChar == -1)
+                if (intChar == -1) {
                     break;
+                }
 
                 char c = (char) intChar;
                 if (c == '<') {

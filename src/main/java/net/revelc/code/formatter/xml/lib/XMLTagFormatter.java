@@ -112,19 +112,22 @@ public class XMLTagFormatter {
 
         public int minimumLength() {
             int length = 2; // for the < >
-            if (this.isClosed())
+            if (this.isClosed()) {
                 length++; // if we need to add an />
+            }
             length += this.getElementName().length();
-            if (this.attributeCount() > 0 || this.isClosed())
+            if (this.attributeCount() > 0 || this.isClosed()) {
                 length++;
+            }
             for (int i = 0; i < this.attributeCount(); i++) {
                 AttributePair attributePair = this.getAttributePair(i);
                 length += attributePair.getAttribute().length();
                 length += attributePair.getValue().length();
                 length += 4; // equals sign, quote characters & trailing space
             }
-            if (this.attributeCount() > 0 && !this.isClosed())
+            if (this.attributeCount() > 0 && !this.isClosed()) {
                 length--;
+            }
             return length;
         }
 
@@ -138,8 +141,9 @@ public class XMLTagFormatter {
             StringBuilder sb = new StringBuilder(500);
             sb.append('<');
             sb.append(this.getElementName());
-            if (this.attributeCount() > 0 || this.isClosed())
+            if (this.attributeCount() > 0 || this.isClosed()) {
                 sb.append(' ');
+            }
 
             for (int i = 0; i < this.attributeCount(); i++) {
                 AttributePair attributePair = this.getAttributePair(i);
@@ -148,11 +152,13 @@ public class XMLTagFormatter {
                 sb.append(attributePair.getQuote());
                 sb.append(attributePair.getValue());
                 sb.append(attributePair.getQuote());
-                if (this.isClosed() || i != this.attributeCount() - 1)
+                if (this.isClosed() || i != this.attributeCount() - 1) {
                     sb.append(' ');
+                }
             }
-            if (this.isClosed())
+            if (this.isClosed()) {
                 sb.append('/');
+            }
             sb.append('>');
             return sb.toString();
         }
@@ -390,8 +396,9 @@ public class XMLTagFormatter {
         private int countChar(char searchChar, String inTargetString) {
             StringCharacterIterator iter = new StringCharacterIterator(inTargetString);
             int i = 0;
-            if (iter.first() == searchChar)
+            if (iter.first() == searchChar) {
                 i++;
+            }
             while (iter.getIndex() < iter.getEndIndex()) {
                 if (iter.next() == searchChar) {
                     i++;
