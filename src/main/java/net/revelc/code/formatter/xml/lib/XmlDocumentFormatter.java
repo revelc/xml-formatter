@@ -438,14 +438,10 @@ public class XmlDocumentFormatter {
 
         @Override
         public int getPostTagDepthModifier() {
-            if (getTagText().endsWith("/>") || getTagText().endsWith("/ >")) { //$NON-NLS-1$ //$NON-NLS-2$
+            if (getTagText().endsWith("/>") || getTagText().endsWith("/ >") || getTagText().startsWith("</")) { //$NON-NLS-1$
                 return 0;
             }
-            if (getTagText().startsWith("</")) { //$NON-NLS-1$
-                return 0;
-            } else {
-                return +1;
-            }
+            return +1;
         }
 
         @Override
