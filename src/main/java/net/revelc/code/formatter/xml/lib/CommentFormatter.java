@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 
 public class CommentFormatter {
 
-    private static final Pattern ORIGINAL_INDENT_PATTERN = Pattern.compile("^(?<indent>[\\s\\t]*)-->");
+    private static final Pattern ORIGINAL_INDENT_PATTERN = Pattern.compile("^(?<indent>\\s*)-->");
 
     public String format(String tagText, String indent, String lineDelimiter, FormattingPreferences prefs) {
         String[] lines = tagText.split(lineDelimiter);
