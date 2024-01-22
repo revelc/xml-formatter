@@ -1,19 +1,10 @@
-/*******************************************************************************
- * Copyright (c) 2004, 2011 John-Mason P. Shackelford and others.,
- *               2019, 2021 Jose Montoya
- *
+/*
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- *
- * Contributors:
- *     John-Mason P. Shackelford - initial API and implementation
- * 	   IBM Corporation - bug fixes
- * 	   Jose Montoya - Modified implementation outside Eclipse Platform
- * 	                - Add thread safety to TagReaderFactory
- *******************************************************************************/
+ */
 package net.revelc.code.formatter.xml.lib;
 
 import java.io.IOException;
@@ -23,11 +14,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.Supplier;
 import java.util.stream.IntStream;
-
 import javax.xml.XMLConstants;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
-
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;

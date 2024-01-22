@@ -1,18 +1,10 @@
-/*******************************************************************************
- * Copyright (c) 2004, 2011 John-Mason P. Shackelford and others.,
- *               2019 Jose Montoya
- *
+/*
  * This program and the accompanying materials are made
  * available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0/
  *
  * SPDX-License-Identifier: EPL-2.0
- *
- * Contributors:
- *     John-Mason P. Shackelford - initial API and implementation
- * 	   IBM Corporation - bug fixes
- * 	   Jose Montoya - Modified implementation outside Eclipse Platform
- *******************************************************************************/
+ */
 package net.revelc.code.formatter.xml.lib;
 
 import java.text.CharacterIterator;

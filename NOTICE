@@ -1,4 +1,12 @@
-Copyright 2021. This project contains code from a community of
+Copyright 2024. This project contains code from a community of
 contributors at https://github.com/revelc/xml-formatter
 
 All work is copyrighted to their respective author(s), unless otherwise stated.
+
+Initial development of FormattingPreferences, XMLTagFormatter, and XmlDocumentFormatter sources:
+  Copyright (c) 2004, 2011 John-Mason P. Shackelford and others.,
+                2019 Jose Montoya
+  Contributors:
+      John-Mason P. Shackelford - initial API and implementation
+         IBM Corporation - bug fixes
+         Jose Montoya - Modified implementation outside Eclipse Platform
