@@ -341,21 +341,11 @@ public class XmlDocumentFormatter {
             this.complete = false;
         }
 
-        /*
-         * (non-Javadoc)
-         *
-         * @see org.eclipse.ant.internal.ui.editor.formatter.XmlDocumentFormatter.TagReader# getStartOfTag()
-         */
         @Override
         public String getStartOfTag() {
             return "";
         }
 
-        /*
-         * (non-Javadoc)
-         *
-         * @see org.eclipse.ant.internal.ui.editor.formatter.XmlDocumentFormatter.TagReader# isTextNode()
-         */
         @Override
         public boolean isTextNode() {
             return this.isTextNode;
@@ -405,21 +395,11 @@ public class XmlDocumentFormatter {
             return node.toString();
         }
 
-        /*
-         * (non-Javadoc)
-         *
-         * @see org.eclipse.ant.internal.ui.editor.formatter.XmlDocumentFormatter.TagReader# requiresInitialIndent()
-         */
         @Override
         public boolean requiresInitialIndent() {
             return false;
         }
 
-        /*
-         * (non-Javadoc)
-         *
-         * @see org.eclipse.ant.internal.ui.editor.formatter.XmlDocumentFormatter.TagReader# startsOnNewline()
-         */
         @Override
         public boolean startsOnNewline() {
             return false;
