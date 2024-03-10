@@ -33,7 +33,7 @@ class FormatterTest {
         Files.createDirectories(path.getParent());
         Files.writeString(path, outXml, StandardOpenOption.CREATE);
 
-        assertEquals(outXml, Files.readString(Paths.get("src/test/resources/test-space-expected.xml")));
+        assertEquals(Files.readString(Paths.get("src/test/resources/test-space-expected.xml")), outXml);
     }
 
     @Test
@@ -47,7 +47,7 @@ class FormatterTest {
         Files.createDirectories(path.getParent());
         Files.writeString(path, outXml, StandardOpenOption.CREATE);
 
-        assertEquals(outXml, Files.readString(Paths.get("src/test/resources/default-output.xml")));
+        assertEquals(Files.readString(Paths.get("src/test/resources/default-output.xml")), outXml);
     }
 
     @Test
@@ -63,7 +63,7 @@ class FormatterTest {
         Files.createDirectories(path.getParent());
         Files.writeString(path, outXml, StandardOpenOption.CREATE);
 
-        assertEquals(outXml, Files.readString(Paths.get("src/test/resources/multi-lined-attrs-output.xml")));
+        assertEquals(Files.readString(Paths.get("src/test/resources/multi-lined-attrs-output.xml")), outXml);
     }
 
     @Test
@@ -79,7 +79,7 @@ class FormatterTest {
         Files.createDirectories(path.getParent());
         Files.writeString(path, outXml, StandardOpenOption.CREATE);
 
-        assertEquals(outXml, Files.readString(Paths.get("src/test/resources/no-wrap-tags-output.xml")));
+        assertEquals(Files.readString(Paths.get("src/test/resources/no-wrap-tags-output.xml")), outXml);
     }
 
     @Test
