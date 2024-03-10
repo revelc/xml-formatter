@@ -33,8 +33,8 @@ public class XmlDocumentFormatter {
      * {@link XmlDocumentFormatter} object can be reused.
      */
     private static class FormatState {
-        private int depth = 0;
-        private boolean lastNodeWasText = false;
+        private int depth;
+        private boolean lastNodeWasText;
         private StringBuilder out = new StringBuilder(200);
     }
 
@@ -187,7 +187,7 @@ public class XmlDocumentFormatter {
 
     private static class DoctypeDeclarationReader extends TagReader {
 
-        private boolean complete = false;
+        private boolean complete;
 
         @Override
         protected void clear() {
@@ -221,7 +221,7 @@ public class XmlDocumentFormatter {
 
     private static class ProcessingInstructionReader extends TagReader {
 
-        private boolean complete = false;
+        private boolean complete;
 
         @Override
         protected void clear() {
@@ -428,7 +428,7 @@ public class XmlDocumentFormatter {
 
     private static class XmlElementReader extends TagReader {
 
-        private boolean complete = false;
+        private boolean complete;
 
         @Override
         protected void clear() {
