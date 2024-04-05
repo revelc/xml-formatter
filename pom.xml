@@ -14,6 +14,7 @@
     <groupId>net.revelc.code</groupId>
     <artifactId>revelc</artifactId>
     <version>5</version>
+    <relativePath />
   </parent>
   <groupId>net.revelc.code.formatter</groupId>
   <artifactId>xml-formatter</artifactId>
