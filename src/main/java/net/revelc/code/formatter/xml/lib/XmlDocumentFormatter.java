@@ -33,8 +33,8 @@ public class XmlDocumentFormatter {
      * {@link XmlDocumentFormatter} object can be reused.
      */
     private static class FormatState {
-        private int depth = 0;
-        private boolean lastNodeWasText = false;
+        private int depth;
+        private boolean lastNodeWasText;
         private StringBuilder out = new StringBuilder(200);
     }
 
@@ -187,7 +187,7 @@ public class XmlDocumentFormatter {
 
     private static class DoctypeDeclarationReader extends TagReader {
 
-        private boolean complete = false;
+        private boolean complete;
 
         @Override
         protected void clear() {
@@ -221,7 +221,7 @@ public class XmlDocumentFormatter {
 
     private static class ProcessingInstructionReader extends TagReader {
 
-        private boolean complete = false;
+        private boolean complete;
 
         @Override
         protected void clear() {
@@ -341,21 +341,11 @@ public class XmlDocumentFormatter {
             this.complete = false;
         }
 
-        /*
-         * (non-Javadoc)
-         *
-         * @see org.eclipse.ant.internal.ui.editor.formatter.XmlDocumentFormatter.TagReader# getStartOfTag()
-         */
         @Override
         public String getStartOfTag() {
             return "";
         }
 
-        /*
-         * (non-Javadoc)
-         *
-         * @see org.eclipse.ant.internal.ui.editor.formatter.XmlDocumentFormatter.TagReader# isTextNode()
-         */
         @Override
         public boolean isTextNode() {
             return this.isTextNode;
@@ -405,21 +395,11 @@ public class XmlDocumentFormatter {
             return node.toString();
         }
 
-        /*
-         * (non-Javadoc)
-         *
-         * @see org.eclipse.ant.internal.ui.editor.formatter.XmlDocumentFormatter.TagReader# requiresInitialIndent()
-         */
         @Override
         public boolean requiresInitialIndent() {
             return false;
         }
 
-        /*
-         * (non-Javadoc)
-         *
-         * @see org.eclipse.ant.internal.ui.editor.formatter.XmlDocumentFormatter.TagReader# startsOnNewline()
-         */
         @Override
         public boolean startsOnNewline() {
             return false;
@@ -428,7 +408,7 @@ public class XmlDocumentFormatter {
 
     private static class XmlElementReader extends TagReader {
 
-        private boolean complete = false;
+        private boolean complete;
 
         @Override
         protected void clear() {
