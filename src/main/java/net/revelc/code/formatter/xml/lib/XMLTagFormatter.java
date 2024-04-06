@@ -165,50 +165,6 @@ public class XMLTagFormatter {
 
         protected List<AttributePair> getAttibutes(String elementText) throws ParseException {
 
-            class Mode {
-                private int modeValue;
-
-                public void setAttributeNameSearching() {
-                    modeValue = 0;
-                }
-
-                public void setAttributeNameFound() {
-                    modeValue = 1;
-                }
-
-                public void setAttributeValueSearching() {
-                    modeValue = 2;
-                }
-
-                public void setAttributeValueFound() {
-                    modeValue = 3;
-                }
-
-                public void setFinished() {
-                    modeValue = 4;
-                }
-
-                public boolean isAttributeNameSearching() {
-                    return modeValue == 0;
-                }
-
-                public boolean isAttributeNameFound() {
-                    return modeValue == 1;
-                }
-
-                public boolean isAttributeValueSearching() {
-                    return modeValue == 2;
-                }
-
-                public boolean isAttributeValueFound() {
-                    return modeValue == 3;
-                }
-
-                public boolean isFinished() {
-                    return modeValue == 4;
-                }
-            }
-
             List<AttributePair> attributePairs = new ArrayList<>();
 
             CharacterIterator iter = new StringCharacterIterator(
@@ -259,8 +215,7 @@ public class XMLTagFormatter {
 
                     } else {
                         // this is no place for a quote!
-                        throw new ParseException("Unexpected '" + c //$NON-NLS-1$
-                                + "' when parsing:\n\t" + elementText); //$NON-NLS-1$
+                        parseException(elementText, c);
                     }
                     break;
 
@@ -280,8 +235,7 @@ public class XMLTagFormatter {
 
                     } else {
                         // this is no place for an equals sign!
-                        throw new ParseException("Unexpected '" + c //$NON-NLS-1$
-                                + "' when parsing:\n\t" + elementText); //$NON-NLS-1$
+                        parseException(elementText, c);
                     }
                     break;
 
@@ -299,8 +253,7 @@ public class XMLTagFormatter {
                         // consume the remaining characters
                     } else {
                         // we aren't ready to be done!
-                        throw new ParseException("Unexpected '" + c //$NON-NLS-1$
-                                + "' when parsing:\n\t" + elementText); //$NON-NLS-1$
+                        parseException(elementText, c);
                     }
                     break;
 
@@ -315,8 +268,7 @@ public class XMLTagFormatter {
 
                     } else if (mode.isFinished()) {
                         if (!Character.isWhitespace(c)) {
-                            throw new ParseException("Unexpected '" + c //$NON-NLS-1$
-                                    + "' when parsing:\n\t" + elementText); //$NON-NLS-1$
+                            parseException(elementText, c);
                         }
                     } else if (!Character.isWhitespace(c)) {
                         if (mode.isAttributeNameSearching()) {
@@ -340,6 +292,22 @@ public class XMLTagFormatter {
                 throw new ParseException("Element did not complete normally."); //$NON-NLS-1$
             }
             return attributePairs;
+        }
+
+        /**
+         * Parse Exception.
+         *
+         * @param elementText
+         *            the element text
+         * @param c
+         *            the c
+         *
+         * @throws ParseException
+         *             the parse exception
+         */
+        private void parseException(String elementText, char c) throws ParseException {
+            throw new ParseException("Unexpected '" + c //$NON-NLS-1$
+                    + "' when parsing:\n\t" + elementText); //$NON-NLS-1$
         }
 
         /**
