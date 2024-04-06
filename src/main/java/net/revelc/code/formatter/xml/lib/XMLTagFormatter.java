@@ -156,8 +156,7 @@ public class XMLTagFormatter {
         }
     }
 
-    // if object creation is an issue, use static methods or a flyweight
-    // pattern
+    // if object creation is an issue, use static methods or a flyweight pattern
     protected static class TagParser {
 
         private String fElementName;
@@ -167,46 +166,46 @@ public class XMLTagFormatter {
         protected List<AttributePair> getAttibutes(String elementText) throws ParseException {
 
             class Mode {
-                private int mode;
+                private int modeValue;
 
                 public void setAttributeNameSearching() {
-                    mode = 0;
+                    modeValue = 0;
                 }
 
                 public void setAttributeNameFound() {
-                    mode = 1;
+                    modeValue = 1;
                 }
 
                 public void setAttributeValueSearching() {
-                    mode = 2;
+                    modeValue = 2;
                 }
 
                 public void setAttributeValueFound() {
-                    mode = 3;
+                    modeValue = 3;
                 }
 
                 public void setFinished() {
-                    mode = 4;
+                    modeValue = 4;
                 }
 
                 public boolean isAttributeNameSearching() {
-                    return mode == 0;
+                    return modeValue == 0;
                 }
 
                 public boolean isAttributeNameFound() {
-                    return mode == 1;
+                    return modeValue == 1;
                 }
 
                 public boolean isAttributeValueSearching() {
-                    return mode == 2;
+                    return modeValue == 2;
                 }
 
                 public boolean isAttributeValueFound() {
-                    return mode == 3;
+                    return modeValue == 3;
                 }
 
                 public boolean isFinished() {
-                    return mode == 4;
+                    return modeValue == 4;
                 }
             }
 
