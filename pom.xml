@@ -49,17 +49,18 @@ SPDX-License-Identifier: EPL-2.0
     <maven.compiler.release>11</maven.compiler.release>
     <!-- rat plugin is no good at validating EPL headers out of the box -->
     <rat.skip>true</rat.skip>
+    <slf4j.version>1.7.36</slf4j.version>
   </properties>
   <dependencies>
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
-      <version>1.7.36</version>
+      <version>${slf4j.version}</version>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-simple</artifactId>
-      <version>1.7.36</version>
+      <version>${slf4j.version}</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
