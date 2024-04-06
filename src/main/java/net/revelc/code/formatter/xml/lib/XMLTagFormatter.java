@@ -238,6 +238,9 @@ public class XMLTagFormatter {
 
                     } else if (mode.isAttributeValueFound() && attributeQuote == c) {
 
+                        assert currentAttributeName != null;
+                        assert currentAttributeValue != null;
+
                         // we've completed a pair!
                         AttributePair pair = new AttributePair(currentAttributeName.toString(),
                                 currentAttributeValue.toString(), attributeQuote);
@@ -248,6 +251,8 @@ public class XMLTagFormatter {
                         mode.setAttributeNameSearching();
 
                     } else if (mode.isAttributeValueFound() && attributeQuote != c) {
+
+                        assert currentAttributeValue != null;
 
                         // this quote character is part of the attribute value
                         currentAttributeValue.append(c);
@@ -262,6 +267,8 @@ public class XMLTagFormatter {
                 case '=':
 
                     if (mode.isAttributeValueFound()) {
+
+                        assert currentAttributeValue != null;
 
                         // this character is part of the attribute value
                         currentAttributeValue.append(c);
@@ -281,6 +288,9 @@ public class XMLTagFormatter {
                 case '/':
                 case '>':
                     if (mode.isAttributeValueFound()) {
+
+                        assert currentAttributeValue != null;
+
                         // attribute values are CDATA, add it all
                         currentAttributeValue.append(c);
                     } else if (mode.isAttributeNameSearching()) {
@@ -297,6 +307,9 @@ public class XMLTagFormatter {
                 default:
 
                     if (mode.isAttributeValueFound()) {
+
+                        assert currentAttributeValue != null;
+
                         // attribute values are CDATA, add it all
                         currentAttributeValue.append(c);
 
@@ -312,6 +325,9 @@ public class XMLTagFormatter {
                             currentAttributeName = new StringBuilder(255);
                             currentAttributeName.append(c);
                         } else if (mode.isAttributeNameFound()) {
+
+                            assert currentAttributeName != null;
+
                             currentAttributeName.append(c);
                         }
                     }
