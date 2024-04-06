@@ -17,6 +17,8 @@ import java.util.stream.IntStream;
 import javax.xml.XMLConstants;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -24,6 +26,8 @@ import org.xml.sax.SAXParseException;
 import org.xml.sax.XMLReader;
 
 public class XmlDocumentFormatter {
+
+    private static final Logger logger = LoggerFactory.getLogger(XmlDocumentFormatter.class);
 
     private final String fDefaultLineDelimiter;
     private final FormattingPreferences prefs;
@@ -109,7 +113,8 @@ public class XmlDocumentFormatter {
             }
             reader.close();
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            logger.error("{}", e.getMessage());
+            logger.debug("", e);
         }
         return state.out.toString();
     }
@@ -129,12 +134,13 @@ public class XmlDocumentFormatter {
             XMLReader reader = parser.getXMLReader();
             reader.setErrorHandler(errorHandler);
             reader.parse(new InputSource(new StringReader(documentText)));
-        } catch (Exception exception) {
-            if (!(exception instanceof SAXParseException)
+        } catch (Exception e) {
+            if (!(e instanceof SAXParseException)
                     || !prefs.getWellFormedValidation().equals(FormattingPreferences.WARN)) {
-                throw new IllegalArgumentException(exception);
+                throw new IllegalArgumentException(e);
             }
-            System.err.println("WARN: " + exception.getMessage());
+            logger.error("WARN: {}", e.getMessage());
+            logger.debug("", e);
         }
     }
 
