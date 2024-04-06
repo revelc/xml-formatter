@@ -97,10 +97,9 @@ public class XmlDocumentFormatter {
             validateWellFormedness(documentText);
         }
 
-        Reader reader = new StringReader(documentText);
         FormatState state = new FormatState();
 
-        try {
+        try (Reader reader = new StringReader(documentText)) {
             while (true) {
                 reader.mark(1);
                 int intChar = reader.read();
@@ -111,7 +110,6 @@ public class XmlDocumentFormatter {
                 }
                 copyNode(reader, state);
             }
-            reader.close();
         } catch (IOException e) {
             logger.error("{}", e.getMessage());
             logger.debug("", e);
