@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-    This program and the accompanying materials are made
-    available under the terms of the Eclipse Public License 2.0
-    which is available at https://www.eclipse.org/legal/epl-2.0/
+	This program and the accompanying materials are made
+	available under the terms of the Eclipse Public License 2.0
+	which is available at https://www.eclipse.org/legal/epl-2.0/
 
-    SPDX-License-Identifier: EPL-2.0
+	SPDX-License-Identifier: EPL-2.0
 
 -->
 <mule
@@ -57,17 +57,17 @@ http://www.mulesoft.org/schema/mule/api-platform-gw http://www.mulesoft.org/sche
 	<!--Here's a comment surrounded wrapped by empty lines to make sure they are kept-->
 
 	<!--
-	Here's a comment block.
-	Make sure they have correct indentation after format.
+		Here's a comment block.
+		Make sure they have correct indentation after format.
 	-->
 
 	<!--
-	    Here's a comment block with leading spaces.
-	    Make sure they have correct indentation and keep the leading spaces after format.
+		Here's a comment block with leading spaces.
+		Make sure they have correct indentation and keep the leading spaces after format.
 	-->
 
 	<!--Here's a comment block with unaligned block start/end.
-	    Make sure they have correct indentation after format.-->
+		Make sure they have correct indentation after format.-->
 
 	<api-platform-gw:api
 		apiName="${api-v2.name}"

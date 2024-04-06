@@ -78,8 +78,8 @@ public class XmlDocumentFormatter {
         } else if (tag instanceof CommentReader) {
             StringBuilder indentBuilder = new StringBuilder(30);
             indent(state.depth, indentBuilder);
-            state.out.append(
-                    new CommentFormatter().format(tag.getTagText(), indentBuilder.toString(), fDefaultLineDelimiter));
+            state.out.append(new CommentFormatter().format(tag.getTagText(), indentBuilder.toString(),
+                    fDefaultLineDelimiter, prefs));
         } else {
             String tagText = tag.getTagText();
             if (!prefs.getDeleteBlankLines()
