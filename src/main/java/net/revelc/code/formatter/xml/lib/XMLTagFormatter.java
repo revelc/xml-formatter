@@ -156,8 +156,7 @@ public class XMLTagFormatter {
         }
     }
 
-    // if object creation is an issue, use static methods or a flyweight
-    // pattern
+    // if object creation is an issue, use static methods or a flyweight pattern
     protected static class TagParser {
 
         private String fElementName;
@@ -165,50 +164,6 @@ public class XMLTagFormatter {
         private String fParseText;
 
         protected List<AttributePair> getAttibutes(String elementText) throws ParseException {
-
-            class Mode {
-                private int mode;
-
-                public void setAttributeNameSearching() {
-                    mode = 0;
-                }
-
-                public void setAttributeNameFound() {
-                    mode = 1;
-                }
-
-                public void setAttributeValueSearching() {
-                    mode = 2;
-                }
-
-                public void setAttributeValueFound() {
-                    mode = 3;
-                }
-
-                public void setFinished() {
-                    mode = 4;
-                }
-
-                public boolean isAttributeNameSearching() {
-                    return mode == 0;
-                }
-
-                public boolean isAttributeNameFound() {
-                    return mode == 1;
-                }
-
-                public boolean isAttributeValueSearching() {
-                    return mode == 2;
-                }
-
-                public boolean isAttributeValueFound() {
-                    return mode == 3;
-                }
-
-                public boolean isFinished() {
-                    return mode == 4;
-                }
-            }
 
             List<AttributePair> attributePairs = new ArrayList<>();
 
@@ -239,6 +194,9 @@ public class XMLTagFormatter {
 
                     } else if (mode.isAttributeValueFound() && attributeQuote == c) {
 
+                        assert currentAttributeName != null;
+                        assert currentAttributeValue != null;
+
                         // we've completed a pair!
                         AttributePair pair = new AttributePair(currentAttributeName.toString(),
                                 currentAttributeValue.toString(), attributeQuote);
@@ -250,19 +208,22 @@ public class XMLTagFormatter {
 
                     } else if (mode.isAttributeValueFound() && attributeQuote != c) {
 
+                        assert currentAttributeValue != null;
+
                         // this quote character is part of the attribute value
                         currentAttributeValue.append(c);
 
                     } else {
                         // this is no place for a quote!
-                        throw new ParseException("Unexpected '" + c //$NON-NLS-1$
-                                + "' when parsing:\n\t" + elementText); //$NON-NLS-1$
+                        parseException(elementText, c);
                     }
                     break;
 
                 case '=':
 
                     if (mode.isAttributeValueFound()) {
+
+                        assert currentAttributeValue != null;
 
                         // this character is part of the attribute value
                         currentAttributeValue.append(c);
@@ -274,14 +235,16 @@ public class XMLTagFormatter {
 
                     } else {
                         // this is no place for an equals sign!
-                        throw new ParseException("Unexpected '" + c //$NON-NLS-1$
-                                + "' when parsing:\n\t" + elementText); //$NON-NLS-1$
+                        parseException(elementText, c);
                     }
                     break;
 
                 case '/':
                 case '>':
                     if (mode.isAttributeValueFound()) {
+
+                        assert currentAttributeValue != null;
+
                         // attribute values are CDATA, add it all
                         currentAttributeValue.append(c);
                     } else if (mode.isAttributeNameSearching()) {
@@ -290,21 +253,22 @@ public class XMLTagFormatter {
                         // consume the remaining characters
                     } else {
                         // we aren't ready to be done!
-                        throw new ParseException("Unexpected '" + c //$NON-NLS-1$
-                                + "' when parsing:\n\t" + elementText); //$NON-NLS-1$
+                        parseException(elementText, c);
                     }
                     break;
 
                 default:
 
                     if (mode.isAttributeValueFound()) {
+
+                        assert currentAttributeValue != null;
+
                         // attribute values are CDATA, add it all
                         currentAttributeValue.append(c);
 
                     } else if (mode.isFinished()) {
                         if (!Character.isWhitespace(c)) {
-                            throw new ParseException("Unexpected '" + c //$NON-NLS-1$
-                                    + "' when parsing:\n\t" + elementText); //$NON-NLS-1$
+                            parseException(elementText, c);
                         }
                     } else if (!Character.isWhitespace(c)) {
                         if (mode.isAttributeNameSearching()) {
@@ -313,6 +277,9 @@ public class XMLTagFormatter {
                             currentAttributeName = new StringBuilder(255);
                             currentAttributeName.append(c);
                         } else if (mode.isAttributeNameFound()) {
+
+                            assert currentAttributeName != null;
+
                             currentAttributeName.append(c);
                         }
                     }
@@ -325,6 +292,22 @@ public class XMLTagFormatter {
                 throw new ParseException("Element did not complete normally."); //$NON-NLS-1$
             }
             return attributePairs;
+        }
+
+        /**
+         * Parse Exception.
+         *
+         * @param elementText
+         *            the element text
+         * @param c
+         *            the c
+         *
+         * @throws ParseException
+         *             the parse exception
+         */
+        private void parseException(String elementText, char c) throws ParseException {
+            throw new ParseException("Unexpected '" + c //$NON-NLS-1$
+                    + "' when parsing:\n\t" + elementText); //$NON-NLS-1$
         }
 
         /**
@@ -362,8 +345,7 @@ public class XMLTagFormatter {
         }
 
         private int tagEnd(String text) {
-            // This is admittedly a little loose, but we don't want the
-            // formatter to be too strict...
+            // This is admittedly a little loose, but we don't want the formatter to be too strict...
             // http://www.w3.org/TR/2000/REC-xml-20001006#NT-Name
             for (int i = 1; i < text.length(); i++) {
                 char c = text.charAt(i);
