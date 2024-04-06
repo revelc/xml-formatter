@@ -345,8 +345,7 @@ public class XMLTagFormatter {
         }
 
         private int tagEnd(String text) {
-            // This is admittedly a little loose, but we don't want the
-            // formatter to be too strict...
+            // This is admittedly a little loose, but we don't want the formatter to be too strict...
             // http://www.w3.org/TR/2000/REC-xml-20001006#NT-Name
             for (int i = 1; i < text.length(); i++) {
                 char c = text.charAt(i);
