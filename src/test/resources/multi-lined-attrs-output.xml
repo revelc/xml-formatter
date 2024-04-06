@@ -74,7 +74,7 @@ http://www.mulesoft.org/schema/mule/api-platform-gw http://www.mulesoft.org/sche
 		version="${api-v2.version}"
 		flowRef="api-v2-main"
 		create="true"
-		apikitRef="api-v2-config"
+		apikitRef='api-v2-config'
 		doc:name="API Autodiscovery" />
 	<flow
 		name="api-v2-main">

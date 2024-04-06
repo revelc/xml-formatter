@@ -47,7 +47,7 @@ http://www.mulesoft.org/schema/mule/api-platform-gw http://www.mulesoft.org/sche
 	    Make sure they have correct indentation after format.-->
 
 	<api-platform-gw:api apiName="${api-v2.name}" version="${api-v2.version}" flowRef="api-v2-main" create="true"
-		apikitRef="api-v2-config" doc:name="API Autodiscovery" />
+		apikitRef='api-v2-config' doc:name="API Autodiscovery" />
 	<flow name="api-v2-main">
 		<http:listener config-ref="api-httpsListenerConfig" path="/api/v2/*" doc:name="HTTP" />
 		<set-variable variableName="traceId"

@@ -452,9 +452,7 @@ public class XmlDocumentFormatter {
                 char c = (char) intChar;
 
                 node.append(c);
-                // TODO logic incorrectly assumes that " is quote character
-                // when it could also be '
-                if (c == '"') {
+                if (c == '"' || c == '\'') {
                     insideQuote = !insideQuote;
                 }
                 if (c == '>' && !insideQuote) {
@@ -468,6 +466,7 @@ public class XmlDocumentFormatter {
     private static ErrorHandler errorHandler = new ErrorHandler() {
         @Override
         public void warning(SAXParseException e) throws SAXException {
+            // Do nothing on warning
         }
 
         @Override
