@@ -17,7 +17,7 @@ public class CommentFormatter {
     private static final Pattern ORIGINAL_INDENT_PATTERN = Pattern.compile("^(?<indent>\\s*)-->");
 
     public String format(String tagText, String indent, String lineDelimiter) {
-        String[] lines = tagText.split(lineDelimiter);
+        String[] lines = tagText.split(lineDelimiter, -1);
         String originalIndent = resolveOriginalIndent(lines);
 
         List<String> newLines = new ArrayList<>();
