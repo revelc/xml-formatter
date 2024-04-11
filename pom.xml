@@ -18,7 +18,7 @@
   </parent>
   <groupId>net.revelc.code.formatter</groupId>
   <artifactId>xml-formatter</artifactId>
-  <version>0.4.0-SNAPSHOT</version>
+  <version>0.4.0</version>
   <name>xml-formatter</name>
   <description>XML Formatter for use with formatter-maven-plugin</description>
   <url>https://github.com/revelc/xml-formatter</url>
@@ -36,7 +36,7 @@
     </developer>
   </developers>
   <scm>
-    <tag>HEAD</tag>
+    <tag>xml-formatter-0.4.0</tag>
   </scm>
   <properties>
     <licenseText><![CDATA[
