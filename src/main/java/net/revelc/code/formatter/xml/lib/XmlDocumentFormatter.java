@@ -78,8 +78,8 @@ public class XmlDocumentFormatter {
         } else if (tag instanceof CommentReader) {
             StringBuilder indentBuilder = new StringBuilder(30);
             indent(state.depth, indentBuilder);
-            state.out.append(
-                    new CommentFormatter().format(tag.getTagText(), indentBuilder.toString(), fDefaultLineDelimiter));
+            state.out.append(new CommentFormatter().format(tag.getTagText(), indentBuilder.toString(),
+                    fDefaultLineDelimiter, prefs));
         } else {
             String tagText = tag.getTagText();
             if (!prefs.getDeleteBlankLines()
@@ -452,9 +452,7 @@ public class XmlDocumentFormatter {
                 char c = (char) intChar;
 
                 node.append(c);
-                // TODO logic incorrectly assumes that " is quote character
-                // when it could also be '
-                if (c == '"') {
+                if (c == '"' || c == '\'') {
                     insideQuote = !insideQuote;
                 }
                 if (c == '>' && !insideQuote) {
@@ -468,6 +466,7 @@ public class XmlDocumentFormatter {
     private static ErrorHandler errorHandler = new ErrorHandler() {
         @Override
         public void warning(SAXParseException e) throws SAXException {
+            // Do nothing on warning
         }
 
         @Override

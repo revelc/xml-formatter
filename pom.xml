@@ -76,6 +76,20 @@ SPDX-License-Identifier: EPL-2.0
           </ignoredUnusedDeclaredDependencies>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>com.mycila</groupId>
+        <artifactId>license-maven-plugin</artifactId>
+        <configuration>
+          <licenseSets>
+            <licenseSet>
+              <excludes combine.children="append">
+                <exclude>**/*-output.xml</exclude>
+                <exclude>**/*-expected.xml</exclude>
+              </excludes>
+            </licenseSet>
+          </licenseSets>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
 </project>
